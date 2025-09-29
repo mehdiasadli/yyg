@@ -66,8 +66,40 @@ const featuredItemVariants = {
 
 export default function WhyYayago() {
   return (
-    <section className='py-24 px-6 bg-white font-montserrat'>
-      <div className='max-w-7xl mx-auto'>
+    <section className='py-24 px-6 bg-gradient-to-br from-white via-slate-50/50 to-blue-50/30 font-montserrat relative overflow-hidden'>
+      {/* Light sophisticated background with automotive theme */}
+      <div className='absolute inset-0 bg-gradient-to-br from-white via-gray-50/80 to-stone-100/70' />
+
+      {/* Luxury automotive background */}
+      <div className='absolute inset-0 opacity-[0.02]'>
+        <img
+          src='https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&h=1080&fit=crop&crop=center'
+          alt='Luxury automotive background'
+          className='w-full h-full object-cover'
+        />
+      </div>
+
+      {/* Elegant overlay gradients */}
+      <div className='absolute inset-0 bg-gradient-to-br from-blue-50/25 via-transparent to-purple-50/20' />
+      <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-amber-50/15 to-transparent' />
+
+      {/* Sophisticated floating elements */}
+      <div className='absolute top-20 right-10 w-72 h-72 bg-gradient-to-br from-blue-100/30 to-purple-100/30 rounded-full blur-3xl animate-pulse' />
+      <div
+        className='absolute bottom-20 left-10 w-96 h-96 bg-gradient-to-tr from-purple-100/20 to-blue-100/20 rounded-full blur-3xl animate-pulse'
+        style={{ animationDelay: '1s' }}
+      />
+
+      {/* Subtle automotive silhouettes */}
+      <div className='absolute top-1/3 left-1/4 w-32 h-20 opacity-[0.015]'>
+        <img
+          src='https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&h=200&fit=crop'
+          alt='Car silhouette'
+          className='w-full h-full object-cover rounded-lg'
+        />
+      </div>
+
+      <div className='max-w-7xl mx-auto relative'>
         {/* Header */}
         <motion.div
           className='text-center mb-16'
@@ -107,8 +139,8 @@ export default function WhyYayago() {
                 className={`group relative ${isFeatured ? 'md:col-span-1 md:row-span-1' : ''}`}
               >
                 <div
-                  className={`relative bg-white rounded-2xl p-8 border border-gray-100 hover:border-gray-200 transition-all duration-500 hover:shadow-xl hover:shadow-gray-200/50 h-full flex flex-col ${
-                    isFeatured ? 'md:scale-110 md:z-10' : ''
+                  className={`relative bg-white/90 backdrop-blur-sm rounded-2xl p-8 border border-gray-100/50 hover:border-gray-200/80 transition-all duration-500 hover:shadow-xl hover:shadow-gray-200/50 h-full flex flex-col ${
+                    isFeatured ? 'md:scale-110 md:z-10 ring-1 ring-blue-100/50' : ''
                   }`}
                 >
                   {/* Subtle background gradient for featured card */}

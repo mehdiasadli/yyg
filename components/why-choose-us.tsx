@@ -87,8 +87,43 @@ const headerVariants = {
 
 export default function WhyChooseUs() {
   return (
-    <section className='font-montserrat relative py-24 px-6 bg-white'>
-      <div className='max-w-7xl mx-auto'>
+    <section className='font-montserrat relative py-24 px-6 bg-gradient-to-br from-white via-slate-50/50 to-gray-100/60 overflow-hidden'>
+      {/* Light sophisticated background with automotive service theme */}
+      <div className='absolute inset-0 bg-gradient-to-br from-white via-gray-50/70 to-stone-100/60' />
+
+      {/* Automotive service background */}
+      <div className='absolute inset-0 opacity-[0.02]'>
+        <img
+          src='https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=1920&h=1080&fit=crop&crop=center'
+          alt='Automotive service background'
+          className='w-full h-full object-cover'
+        />
+      </div>
+
+      {/* Elegant overlay gradients */}
+      <div className='absolute inset-0 bg-gradient-to-br from-blue-50/20 via-transparent to-purple-50/15' />
+      <div className='absolute inset-0 bg-gradient-to-tr from-transparent via-amber-50/10 to-transparent' />
+
+      {/* Sophisticated floating elements */}
+      <div
+        className='absolute top-0 left-20 w-64 h-64 bg-gradient-to-br from-blue-100/25 to-transparent rounded-full blur-3xl animate-pulse'
+        style={{ animationDelay: '2s' }}
+      />
+      <div
+        className='absolute bottom-10 right-20 w-80 h-80 bg-gradient-to-bl from-purple-100/20 to-transparent rounded-full blur-3xl animate-pulse'
+        style={{ animationDelay: '3s' }}
+      />
+
+      {/* Subtle automotive service elements */}
+      <div className='absolute top-1/3 right-1/3 w-36 h-24 opacity-[0.015]'>
+        <img
+          src='https://images.unsplash.com/photo-1486754735734-325b5831c3ad?w=400&h=200&fit=crop'
+          alt='Service silhouette'
+          className='w-full h-full object-cover rounded-lg'
+        />
+      </div>
+
+      <div className='max-w-7xl mx-auto relative'>
         {/* Header */}
         <motion.header
           className='text-center mb-16'
