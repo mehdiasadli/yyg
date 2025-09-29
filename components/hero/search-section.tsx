@@ -49,70 +49,89 @@ export default function HeroSearchSection() {
 
   return (
     <motion.div
-      className='bg-white/95 backdrop-blur-md rounded-2xl md:rounded-full shadow-2xl border border-gray-100/50 font-montserrat'
-      whileHover={{
-        scale: 1.02,
-        boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-      }}
-      transition={{ duration: 0.3 }}
+      className='bg-slate-900/40 backdrop-blur-2xl rounded-[2rem] shadow-[0_20px_70px_-10px_rgba(0,0,0,0.3)] border border-white/10 font-montserrat relative overflow-visible'
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.4 }}
     >
+      {/* Elegant dark background with subtle gradients */}
+      <div className='absolute inset-0 bg-gradient-to-br from-slate-900/50 via-gray-900/40 to-black/50 rounded-[2rem]' />
+      <div className='absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(99,102,241,0.1)_0%,_transparent_50%)] rounded-[2rem]' />
+      <div className='absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(168,85,247,0.08)_0%,_transparent_50%)] rounded-[2rem]' />
+
       {/* Desktop Layout */}
-      <div className='hidden md:flex items-center gap-6 justify-between px-6 py-4'>
-        <div className='flex-1 min-w-0 relative z-10'>
+      <div className='hidden md:flex items-center gap-0 relative'>
+        {/* Search Input Section */}
+        <div className='flex-[2.5] p-8 relative z-20'>
           <ActionSearchBar query={query} setQuery={setQuery} />
         </div>
 
-        <div className='relative flex flex-col items-center text-xs text-gray-500'>
-          <label className='absolute text-gray-700 z-50 -top-7 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium shadow-sm border border-gray-100'>
-            Pick up
-          </label>
+        {/* Vertical Divider */}
+        <div className='w-px bg-gradient-to-b from-transparent via-white/10 to-transparent my-6' />
+
+        {/* Pick Up Section */}
+        <div className='flex-1 p-8'>
+          <label className='text-white/60 text-xs font-light mb-2 block tracking-wide uppercase'>Pick up</label>
           <DatePicker
-            width='120px'
+            width='100%'
             minDate={today}
             date={pickupDate}
             time={pickupTime}
             onSelectTime={(time) => setPickupTime(time)}
             onSelectDate={(date) => setPickupDate(date)}
+            placeholder='Pick a date'
           />
         </div>
 
-        <div className='relative flex flex-col items-center text-xs text-gray-500'>
-          <label className='absolute text-gray-700 z-50 -top-7 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-medium shadow-sm border border-gray-100'>
-            Drop off
-          </label>
+        {/* Vertical Divider */}
+        <div className='w-px bg-gradient-to-b from-transparent via-white/10 to-transparent my-6' />
+
+        {/* Drop Off Section */}
+        <div className='flex-1 p-8'>
+          <label className='text-white/60 text-xs font-light mb-2 block tracking-wide uppercase'>Drop off</label>
           <DatePicker
-            width='120px'
+            width='100%'
             minDate={pickupDate}
             minTime={pickupTime}
             date={dropoffDate}
             time={dropoffTime}
             onSelectTime={(time) => setDropoffTime(time)}
             onSelectDate={(date) => setDropoffDate(date)}
+            placeholder='Pick a date'
           />
         </div>
 
-        <AnimateIcon animateOnHover>
-          <ShimmerButton
-            shimmerSize='2px'
-            background='var(--primary)'
-            borderRadius='50%'
-            className='shadow-xl hover:shadow-2xl w-14 h-14 p-0 transition-shadow duration-300'
-            onClick={handleSearch}
-          >
-            <SearchIcon />
-          </ShimmerButton>
-        </AnimateIcon>
+        {/* Vertical Divider */}
+        <div className='w-px bg-gradient-to-b from-transparent via-white/10 to-transparent my-6' />
+
+        {/* Search Button Section */}
+        <div className='px-8 py-8 flex items-center justify-center'>
+          <AnimateIcon animateOnHover>
+            <ShimmerButton
+              shimmerSize='3px'
+              background='linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.9) 100%)'
+              borderRadius='1rem'
+              className='shadow-2xl hover:shadow-[0_20px_50px_-10px_rgba(var(--primary-rgb),0.4)] w-14 h-14 p-0 transition-all duration-300 hover:scale-105'
+              onClick={handleSearch}
+            >
+              <SearchIcon className='w-6 h-6' />
+            </ShimmerButton>
+          </AnimateIcon>
+        </div>
       </div>
 
       {/* Mobile Layout */}
-      <div className='md:hidden p-6 space-y-6'>
-        <div className='w-full relative z-10'>
+      <div className='md:hidden p-6 space-y-6 relative z-20'>
+        <div className='w-full relative'>
           <ActionSearchBar query={query} setQuery={setQuery} />
         </div>
 
-        <div className='grid grid-cols-2 gap-4'>
+        {/* Elegant horizontal separator */}
+        <div className='w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent' />
+
+        <div className='space-y-5'>
           <div className='relative'>
-            <label className='block text-gray-700 text-sm font-medium mb-2'>Pick up</label>
+            <label className='block text-white/60 text-xs font-light mb-2 tracking-wide uppercase'>Pick up</label>
             <DatePicker
               width='100%'
               minDate={today}
@@ -120,11 +139,12 @@ export default function HeroSearchSection() {
               time={pickupTime}
               onSelectTime={(time) => setPickupTime(time)}
               onSelectDate={(date) => setPickupDate(date)}
+              placeholder='Pick a date'
             />
           </div>
 
           <div className='relative'>
-            <label className='block text-gray-700 text-sm font-medium mb-2'>Drop off</label>
+            <label className='block text-white/60 text-xs font-light mb-2 tracking-wide uppercase'>Drop off</label>
             <DatePicker
               width='100%'
               minDate={pickupDate}
@@ -133,22 +153,26 @@ export default function HeroSearchSection() {
               time={dropoffTime}
               onSelectTime={(time) => setDropoffTime(time)}
               onSelectDate={(date) => setDropoffDate(date)}
+              placeholder='Pick a date'
             />
           </div>
         </div>
 
+        {/* Elegant horizontal separator */}
+        <div className='w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent' />
+
         <div className='flex justify-center pt-2'>
           <AnimateIcon animateOnHover>
             <ShimmerButton
-              shimmerSize='2px'
-              background='var(--primary)'
-              borderRadius='12px'
-              className='shadow-xl hover:shadow-2xl px-8 py-4 transition-shadow duration-300'
+              shimmerSize='3px'
+              background='linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--primary) / 0.9) 100%)'
+              borderRadius='1rem'
+              className='shadow-2xl hover:shadow-[0_20px_50px_-10px_rgba(var(--primary-rgb),0.4)] px-12 py-4 transition-all duration-300 hover:scale-105'
               onClick={handleSearch}
             >
-              <div className='flex items-center gap-2'>
+              <div className='flex items-center gap-3'>
                 <SearchIcon className='w-5 h-5' />
-                <span className='text-white font-medium'>Search</span>
+                <span className='text-white font-normal tracking-wide'>Search Vehicles</span>
               </div>
             </ShimmerButton>
           </AnimateIcon>

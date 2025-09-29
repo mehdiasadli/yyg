@@ -32,7 +32,7 @@ export default function DatePicker({
   maxTime,
   formatDate = 'dd MMM',
   formatTime = (time) => (time ? `, ${time}` : ''),
-  placeholder = 'Pick a date and time',
+  placeholder = 'Pick a date',
   width = '250px',
   date,
   time,
@@ -169,25 +169,29 @@ export default function DatePicker({
             variant='outline'
             mode='input'
             placeholder={!date}
-            className='w-full border-none bg-transparent rounded-full py-3 px-4 text-sm font-light text-gray-900 transition-all duration-200 focus:outline-none focus:ring-0'
+            className='w-full border-none bg-transparent rounded-lg py-2 px-0 text-sm font-normal text-white hover:bg-transparent hover:text-white transition-all duration-200 focus:outline-none focus:ring-0 justify-start'
           >
-            <CalendarIcon className='w-4 h-4 text-gray-500' />
+            <CalendarIcon className='w-4 h-4 text-white/50 mr-3' />
             {date ? (
-              <span className='font-medium'>
+              <span className='font-normal text-white'>
                 {format(date, formatDate)}
-                <span className='text-gray-500 font-light'>{formatTime(time)}</span>
+                <span className='text-white/60 font-light ml-1'>{formatTime(time)}</span>
               </span>
             ) : (
-              <span className='text-gray-500 font-light'>{placeholder}</span>
+              <span className='text-white/50 font-light'>{placeholder}</span>
             )}
           </Button>
         </div>
       </PopoverTrigger>
       <PopoverContent
-        className='w-auto p-0 bg-white/95 backdrop-blur-md border border-gray-100/50 shadow-2xl rounded-2xl'
+        className='w-auto p-0 bg-slate-900/95 backdrop-blur-xl border border-white/10 shadow-2xl rounded-2xl'
         align='start'
       >
-        <div className='flex max-sm:flex-col'>
+        {/* Elegant dark background for dropdown */}
+        <div className='absolute inset-0 bg-gradient-to-br from-slate-900 via-gray-900 to-black rounded-2xl' />
+        <div className='absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_rgba(99,102,241,0.1)_0%,_transparent_50%)] rounded-2xl' />
+
+        <div className='flex max-sm:flex-col relative'>
           <Calendar
             mode='single'
             selected={date}
@@ -197,15 +201,15 @@ export default function DatePicker({
                 onSelectTime?.(undefined);
               }
             }}
-            className='p-4 sm:pe-6 font-montserrat'
+            className='p-4 sm:pe-6 font-montserrat [&_.rdp-day]:text-white [&_.rdp-day_button]:text-white [&_.rdp-day_button:hover]:bg-white/10 [&_.rdp-day_button.rdp-day_selected]:bg-primary [&_.rdp-caption_label]:text-white [&_.rdp-nav_button]:text-white/70 [&_.rdp-nav_button:hover]:bg-white/10 [&_.rdp-day_button.rdp-day_disabled]:text-white/30 [&_.rdp-weekday]:text-white/50'
             disabled={disabled}
           />
           <div className='relative w-full max-sm:h-48 sm:w-44'>
-            <div className='absolute inset-0 py-4 max-sm:border-t border-gray-100/50'>
-              <ScrollArea className='h-full sm:border-s border-gray-100/50 font-montserrat'>
+            <div className='absolute inset-0 py-4 max-sm:border-t border-white/10'>
+              <ScrollArea className='h-full sm:border-s border-white/10 font-montserrat'>
                 <div className='space-y-4'>
                   <div className='flex h-6 shrink-0 items-center px-6'>
-                    <p className='text-sm font-medium text-gray-900'>
+                    <p className='text-sm font-normal text-white'>
                       {date ? format(date, 'EEEE, d MMM') : 'Pick a date'}
                     </p>
                   </div>
@@ -215,13 +219,11 @@ export default function DatePicker({
                         key={timeSlot}
                         variant={time === timeSlot ? 'primary' : 'outline'}
                         size='sm'
-                        className={`w-full font-light transition-all duration-200 ${
+                        className={`w-full font-light transition-all duration-200 rounded-lg ${
                           time === timeSlot
-                            ? 'bg-primary text-white border-primary shadow-sm'
-                            : 'bg-transparent border-gray-200 text-gray-700 hover:bg-gray-50/80 hover:border-gray-300'
-                        } ${
-                          !available ? 'opacity-50 cursor-not-allowed hover:bg-transparent hover:border-gray-200' : ''
-                        }`}
+                            ? 'bg-primary text-white border-primary shadow-md'
+                            : 'bg-white/5 border-white/10 text-white/70 hover:bg-white/10 hover:border-white/20 hover:text-white'
+                        } ${!available ? 'opacity-30 cursor-not-allowed hover:bg-white/5 hover:border-white/10' : ''}`}
                         onClick={() => onSelectTime?.(timeSlot)}
                         disabled={!available}
                       >
