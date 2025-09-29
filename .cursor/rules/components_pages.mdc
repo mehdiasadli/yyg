@@ -1,0 +1,81 @@
+---
+globs: *.tsx
+alwaysApply: false
+---
+
+## Intent
+
+```tsx
+<motion.main
+  initial={{ opacity: 0, y: 8 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.2, ease: 'easeOut' }}
+  className='pt-40 min-h-dvh'
+>
+  {/* sections */}
+</motion.main>
+```
+
+- Keep page-level motion subtle; complex animations live inside client components.
+- Respect `prefers-reduced-motion`.
+
+## Dividing Architecture for Pages
+
+- Break pages into **modular sections** and **feature blocks** composed of shared primitives:
+- Example: `HeroSection`, `FiltersBar`, `CardsGrid`, `PaginationBar`.
+- Each section lives in `app/(feature)/_sections/` or `src/sections/` for clarity.
+- Lists and grids are separate components (`CardsGrid`, `VehicleListItem`) to maximize reuse, readability, and testability.
+
+## Accessibility & Content
+
+- **No emojis** anywhere.
+- One **H1** per page; then H2/H3 for hierarchy.
+- Provide alt text for images and `aria-label`s for nav and controls.
+- Use visible `focus-visible` styles. Ensure contrast compliance.
+
+## Performance & Optimization
+
+- Prefer `next/image` with explicit `sizes`/`fill`; set `priority` only for the hero.
+- Use `next/link` for internal navigation; avoid full reloads.
+- Limit client JS in pages; lazy-load heavy blocks via dynamic import inside client boundaries.
+- Cache server fetches where appropriate (`revalidate`/`cache` options). Use `Suspense` boundaries for data waterfalls.
+
+## Sample Hero Section (Server Component)
+
+```tsx
+import { motion } from 'framer-motion';
+
+export default async function Page() {
+  // fetch server data here
+  return (
+    <motion.main
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2, ease: 'easeOut' }}
+      className='pt-40 min-h-dvh'
+    >
+      <section className='max-w-7xl mx-auto px-4 md:px-6 py-16 md:py-24 space-y-6'>
+        <h1 className='text-4xl md:text-5xl font-semibold tracking-tight'>
+          Discover premium cars from trustworthy owners
+        </h1>
+        <p className='text-lg text-zinc-600 dark:text-zinc-300'>
+          Rent or list vehicles with confidence. Elegant design, smooth interactions, and a focused experience.
+        </p>
+        <div className='mt-6 flex flex-wrap items-center gap-3'>
+          {/* <Button tone="primary" variant="solid">Browse cars</Button> */}
+          {/* <Button variant="ghost">List your car</Button> */}
+        </div>
+      </section>
+
+      {/* Additional sections composed from shared primitives */}
+    </motion.main>
+  );
+}
+```
+
+## Don’ts
+
+- ❌ Do not forget `pt-40` on page root/first section.
+- ❌ Do not mix many saturated backgrounds; keep brand use restrained and elegant.
+- ❌ Do not fetch on the client in pages unless essential for UX.
+- ❌ Do not place emojis in copy, metadata, aria, or comments.

@@ -1,8 +1,12 @@
-import { Suspense } from 'react';
-import { Search, Star, Users, Globe } from 'lucide-react';
+'use client';
+
+import { Suspense, useState } from 'react';
+import { motion } from 'framer-motion';
+import { Search, Star, Users, Globe, Calendar, TrendingUp, Award, Filter } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
 
 // Brand data - in a real app, this would come from a database
 const brands = [
@@ -152,196 +156,288 @@ const brands = [
   },
 ];
 
-function SearchBar() {
-  return (
-    <div className='relative max-w-2xl mx-auto mb-12'>
-      <div className='relative'>
-        <Search className='absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400' />
-        <Input
-          type='text'
-          placeholder='Search for brands'
-          className='pl-12 pr-4 py-6 text-base bg-white/80 backdrop-blur-md border border-gray-200 rounded-2xl shadow-lg focus:border-primary focus:ring-1 focus:ring-primary transition-all duration-200'
-        />
-      </div>
-    </div>
-  );
-}
+const headerVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+    },
+  },
+};
 
-function BrandCard({ brand }: { brand: (typeof brands)[0] }) {
+const cardVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+    },
+  },
+};
+
+function BrandCard({ brand, index }: { brand: (typeof brands)[0]; index: number }) {
   return (
     <Link href={`/brands/${brand.id}`} className='group block h-full'>
-      <div className='relative bg-white/80 backdrop-blur-md rounded-2xl p-6 border border-gray-100/50 hover:border-gray-200 transition-all duration-300 hover:shadow-xl hover:shadow-gray-200/50 h-full flex flex-col'>
+      <motion.div
+        className='relative bg-white rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl hover:shadow-slate-200/50 h-full flex flex-col'
+        variants={cardVariants}
+        initial='hidden'
+        whileInView='visible'
+        viewport={{ once: true }}
+        transition={{ delay: index * 0.05 }}
+        whileHover={{ y: -8 }}
+      >
         {/* Featured Badge */}
         {brand.featured && (
-          <div className='absolute top-4 right-4 px-2 py-1 bg-gradient-to-r from-amber-400 to-orange-500 text-white text-xs font-medium rounded-full shadow-sm'>
+          <div className='absolute top-4 right-4 px-3 py-1.5 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-xs font-semibold rounded-lg shadow-md'>
             Featured
           </div>
         )}
 
         {/* Logo */}
-        <div className='flex items-center justify-center h-20 mb-6 flex-shrink-0'>
+        <div className='flex items-center justify-center h-24 sm:h-28 mb-6 flex-shrink-0'>
           <div className='relative transform group-hover:scale-110 transition-transform duration-300'>
+            <div className='absolute inset-0 bg-white/20 rounded-full blur-md opacity-60' />
             <Image
               src={brand.logo}
               alt={brand.name}
-              width={80}
-              height={80}
-              className='object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-200'
+              width={100}
+              height={100}
+              className='relative object-contain opacity-90 group-hover:opacity-100 transition-opacity duration-200 filter group-hover:brightness-110 drop-shadow-[0_0_8px_rgba(0,0,0,0.1)]'
             />
           </div>
         </div>
 
         {/* Brand Info */}
         <div className='flex-grow flex flex-col'>
-          <div className='text-center mb-4'>
-            <h3 className='text-lg font-medium text-gray-900 mb-2 group-hover:text-primary transition-colors duration-200'>
+          <div className='text-center mb-6'>
+            <h3 className='text-xl font-semibold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors duration-200'>
               {brand.name}
             </h3>
-            <p className='text-sm text-gray-500 font-light'>{brand.description}</p>
+            <p className='text-sm text-slate-500 font-normal'>{brand.description}</p>
           </div>
 
           {/* Stats */}
-          <div className='mt-auto space-y-3'>
-            <div className='flex items-center justify-between text-sm'>
-              <div className='flex items-center gap-1 text-gray-600'>
-                <Users size={14} />
-                <span>{brand.vehicleCount} vehicles</span>
+          <div className='mt-auto space-y-4'>
+            <div className='flex items-center justify-between text-sm bg-slate-50 rounded-xl p-3'>
+              <div className='flex items-center gap-2 text-slate-600'>
+                <Users className='w-4 h-4 text-slate-400' />
+                <span className='font-medium'>{brand.vehicleCount} vehicles</span>
               </div>
-              <div className='flex items-center gap-1 text-amber-600'>
-                <Star size={14} fill='currentColor' />
-                <span className='font-medium'>{brand.rating}</span>
+              <div className='flex items-center gap-1.5 text-amber-600'>
+                <Star className='w-4 h-4 fill-amber-400' />
+                <span className='font-semibold'>{brand.rating}</span>
               </div>
             </div>
 
-            <div className='flex items-center justify-between text-xs text-gray-500'>
-              <div className='flex items-center gap-1'>
-                <Globe size={12} />
-                <span>{brand.country}</span>
+            <div className='flex items-center justify-between text-xs text-slate-500'>
+              <div className='flex items-center gap-1.5'>
+                <Globe className='w-3.5 h-3.5 text-slate-400' />
+                <span className='font-normal'>{brand.country}</span>
               </div>
-              <span>Est. {brand.established}</span>
+              <div className='flex items-center gap-1.5'>
+                <Calendar className='w-3.5 h-3.5 text-slate-400' />
+                <span className='font-normal'>Est. {brand.established}</span>
+              </div>
             </div>
+
+            <Badge className='w-full justify-center bg-slate-100 text-slate-700 border-0 font-medium hover:bg-slate-200 transition-colors duration-200'>
+              {brand.category}
+            </Badge>
           </div>
         </div>
-      </div>
+      </motion.div>
     </Link>
   );
 }
 
-function BrandsGrid() {
-  return (
-    <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6'>
-      {brands.map((brand) => (
-        <BrandCard key={brand.id} brand={brand} />
-      ))}
-    </div>
-  );
-}
-
 export default function BrandsPage() {
+  const [searchQuery, setSearchQuery] = useState('');
   const totalVehicles = brands.reduce((sum, brand) => sum + brand.vehicleCount, 0);
   const featuredBrands = brands.filter((brand) => brand.featured);
 
-  return (
-    <main className='min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 font-montserrat py-20'>
-      {/* Header Section */}
-      <div className='relative py-24 px-6'>
-        <div className='max-w-7xl mx-auto'>
-          <div className='text-center mb-16'>
-            <h1 className='text-4xl md:text-5xl lg:text-6xl font-light text-gray-900 mb-6 tracking-tight'>
-              Premium Car Brands
-            </h1>
-            <p className='text-lg md:text-xl text-gray-600 font-light max-w-3xl mx-auto leading-relaxed mb-8'>
-              Discover our curated collection of the world's most prestigious automotive manufacturers. From Italian
-              supercars to German engineering excellence, find your perfect ride.
-            </p>
+  const filteredBrands = brands.filter(
+    (brand) =>
+      brand.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      brand.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      brand.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
-            {/* Quick Stats */}
-            <div className='flex flex-wrap justify-center gap-8 mb-12'>
-              <div className='text-center'>
-                <div className='text-2xl font-medium text-primary mb-1'>{brands.length}</div>
-                <div className='text-sm text-gray-500 font-light'>Premium Brands</div>
-              </div>
-              <div className='text-center'>
-                <div className='text-2xl font-medium text-primary mb-1'>{totalVehicles}+</div>
-                <div className='text-sm text-gray-500 font-light'>Available Vehicles</div>
-              </div>
-              <div className='text-center'>
-                <div className='text-2xl font-medium text-primary mb-1'>{featuredBrands.length}</div>
-                <div className='text-sm text-gray-500 font-light'>Featured Collections</div>
-              </div>
-            </div>
+  return (
+    <main className='min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 font-montserrat py-20 relative overflow-hidden'>
+      {/* Subtle background elements */}
+      <div className='absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(148,163,184,0.04)_0%,_transparent_50%)]' />
+      <div className='absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(100,116,139,0.03)_0%,_transparent_50%)]' />
+
+      <div className='relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+        {/* Header Section */}
+        <motion.header
+          className='text-center mb-12 sm:mb-16'
+          variants={headerVariants}
+          initial='hidden'
+          animate='visible'
+        >
+          <motion.div
+            className='inline-block px-4 py-1.5 rounded-full bg-slate-900 mb-6'
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <span className='text-sm font-medium text-white tracking-wide'>Premium Brands</span>
+          </motion.div>
+
+          <h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold text-slate-900 mb-6 tracking-tight leading-tight px-4'>
+            Explore Iconic Car Brands
+          </h1>
+          <p className='text-base sm:text-lg md:text-xl text-slate-600 max-w-3xl mx-auto mb-12 font-normal leading-relaxed px-4'>
+            Discover our curated collection of the world's most prestigious automotive manufacturers. From Italian
+            supercars to German engineering excellence.
+          </p>
+
+          {/* Quick Stats */}
+          <div className='grid grid-cols-3 gap-4 sm:gap-8 max-w-3xl mx-auto mb-12'>
+            {[
+              { value: brands.length, label: 'Premium Brands', icon: Award },
+              { value: `${totalVehicles}+`, label: 'Available Vehicles', icon: TrendingUp },
+              { value: featuredBrands.length, label: 'Featured Collections', icon: Star },
+            ].map((stat, index) => {
+              const Icon = stat.icon;
+              return (
+                <motion.div
+                  key={stat.label}
+                  className='bg-white rounded-2xl p-4 sm:p-6 border border-slate-200 shadow-sm'
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: 0.4 + index * 0.1 }}
+                >
+                  <Icon className='w-6 h-6 sm:w-8 sm:h-8 text-blue-600 mx-auto mb-2 sm:mb-3' />
+                  <div className='text-xl sm:text-2xl font-bold text-slate-900 mb-1'>{stat.value}</div>
+                  <div className='text-xs sm:text-sm text-slate-500 font-medium'>{stat.label}</div>
+                </motion.div>
+              );
+            })}
           </div>
 
-          <Suspense fallback={<div className='h-16 bg-gray-200 rounded-2xl animate-pulse' />}>
-            <SearchBar />
-          </Suspense>
-        </div>
-      </div>
-
-      {/* Brands Grid */}
-      <div className='relative pb-24 px-6'>
-        <div className='max-w-7xl mx-auto'>
-          <Suspense
-            fallback={
-              <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-6'>
-                {Array.from({ length: 12 }).map((_, i) => (
-                  <div key={i} className='h-80 bg-gray-200 rounded-2xl animate-pulse' />
-                ))}
-              </div>
-            }
+          {/* Search Bar */}
+          <motion.div
+            className='max-w-2xl mx-auto'
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
           >
-            <BrandsGrid />
-          </Suspense>
-        </div>
-      </div>
+            <div className='relative'>
+              <Search className='absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400' />
+              <Input
+                type='text'
+                placeholder='Search for brands by name, category, or origin...'
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className='pl-12 pr-4 py-6 text-base bg-white border-slate-200 rounded-2xl shadow-lg focus:border-slate-400 focus:ring-2 focus:ring-slate-200 transition-all duration-200 font-normal placeholder:text-slate-400'
+              />
+            </div>
+          </motion.div>
+        </motion.header>
 
-      {/* Information Section */}
-      <div className='relative py-24 px-6 bg-white/50 backdrop-blur-md border-t border-gray-100/50'>
-        <div className='max-w-4xl mx-auto text-center'>
-          <div className='mb-16'>
-            <h2 className='text-3xl md:text-4xl font-light text-gray-900 mb-8 tracking-tight'>
-              Why Choose Premium Brands?
-            </h2>
-            <p className='text-lg text-gray-600 font-light leading-relaxed max-w-3xl mx-auto'>
+        {/* Brands Grid */}
+        <Suspense
+          fallback={
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8'>
+              {Array.from({ length: 12 }).map((_, i) => (
+                <div
+                  key={i}
+                  className='h-96 bg-gradient-to-br from-gray-200 to-gray-100 rounded-2xl sm:rounded-3xl animate-pulse'
+                />
+              ))}
+            </div>
+          }
+        >
+          {filteredBrands.length > 0 ? (
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8 mb-16 sm:mb-20'>
+              {filteredBrands.map((brand, index) => (
+                <BrandCard key={brand.id} brand={brand} index={index} />
+              ))}
+            </div>
+          ) : (
+            <motion.div
+              className='text-center py-16'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
+            >
+              <div className='w-24 h-24 bg-gradient-to-br from-blue-50 to-purple-50 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-blue-100/50'>
+                <Search className='w-12 h-12 text-blue-400' />
+              </div>
+              <h3 className='text-xl sm:text-2xl font-medium text-gray-900 mb-3'>No brands found</h3>
+              <p className='text-gray-500 font-light mb-8 max-w-md mx-auto'>
+                Try adjusting your search to find the brands you're looking for
+              </p>
+            </motion.div>
+          )}
+        </Suspense>
+
+        {/* Information Section */}
+        <motion.section
+          className='bg-white rounded-2xl sm:rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-sm'
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+        >
+          <div className='text-center mb-10'>
+            <h2 className='text-2xl sm:text-3xl font-semibold text-slate-900 mb-4'>Why Choose Premium Brands?</h2>
+            <p className='text-slate-600 font-normal leading-relaxed max-w-3xl mx-auto'>
               Our carefully curated selection of premium automotive brands ensures you have access to the finest
               vehicles with exceptional quality, performance, and luxury features.
             </p>
           </div>
 
-          <div className='grid md:grid-cols-3 gap-12 mb-16'>
-            <div className='text-center'>
-              <h3 className='text-lg font-medium text-gray-900 mb-3'>Verified Quality</h3>
-              <p className='text-gray-600 font-light leading-relaxed'>
-                Every vehicle undergoes rigorous inspection and meets our premium standards for excellence and
-                reliability.
-              </p>
-            </div>
-
-            <div className='text-center'>
-              <h3 className='text-lg font-medium text-gray-900 mb-3'>Trusted Owners</h3>
-              <p className='text-gray-600 font-light leading-relaxed'>
-                Connect with verified owners who maintain their vehicles to the highest standards of care and service.
-              </p>
-            </div>
-
-            <div className='text-center'>
-              <h3 className='text-lg font-medium text-gray-900 mb-3'>Global Selection</h3>
-              <p className='text-gray-600 font-light leading-relaxed'>
-                Access to international brands and models from around the world, bringing luxury to your doorstep.
-              </p>
-            </div>
+          <div className='grid md:grid-cols-3 gap-8 mb-10'>
+            {[
+              {
+                title: 'Verified Quality',
+                description:
+                  'Every vehicle undergoes rigorous inspection and meets our premium standards for excellence and reliability.',
+                icon: Award,
+              },
+              {
+                title: 'Trusted Owners',
+                description:
+                  'Connect with verified owners who maintain their vehicles to the highest standards of care and service.',
+                icon: Users,
+              },
+              {
+                title: 'Global Selection',
+                description:
+                  'Access to international brands and models from around the world, bringing luxury to your doorstep.',
+                icon: Globe,
+              },
+            ].map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <div key={feature.title} className='text-center'>
+                  <div className='w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-4'>
+                    <Icon className='w-7 h-7 text-blue-600' />
+                  </div>
+                  <h3 className='text-lg font-semibold text-slate-900 mb-3'>{feature.title}</h3>
+                  <p className='text-slate-600 font-normal leading-relaxed'>{feature.description}</p>
+                </div>
+              );
+            })}
           </div>
 
-          <div className='text-center pt-8 border-t border-gray-200/50'>
-            <p className='text-gray-500 font-light'>
+          <div className='text-center pt-8 border-t border-slate-200'>
+            <p className='text-slate-600 font-normal'>
               Can't find your preferred brand?{' '}
-              <Link href='/contact' className='text-primary hover:underline font-medium'>
+              <Link href='/contact' className='text-blue-600 hover:text-blue-700 font-semibold hover:underline'>
                 Contact us
               </Link>{' '}
               and we'll help you find the perfect vehicle.
             </p>
           </div>
-        </div>
+        </motion.section>
       </div>
     </main>
   );

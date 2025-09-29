@@ -1,8 +1,24 @@
 'use client';
 
-import { Suspense, useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Star, Calendar, MapPin, Car, Users, Phone, MessageCircle, Search, Filter, X } from 'lucide-react';
+import {
+  ArrowLeft,
+  Star,
+  Calendar,
+  MapPin,
+  Users,
+  Phone,
+  MessageCircle,
+  Search,
+  Filter,
+  X,
+  Globe,
+  Award,
+  Gauge,
+  Fuel,
+  Settings,
+} from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -23,7 +39,6 @@ export default function BrandContent({ brandData, brandCars }: { brandData: any;
     fuel: 'all',
   });
 
-
   // Get unique values for filter options
   const categories = useMemo(() => {
     const uniqueCategories = [...new Set(brandCars.map((car: any) => car.category))];
@@ -40,32 +55,24 @@ export default function BrandContent({ brandData, brandCars }: { brandData: any;
     return uniqueFuels;
   }, [brandCars]);
 
-
   // Filter cars based on search and filters
   const filteredCars = useMemo(() => {
     return brandCars.filter((car: any) => {
-      // Search filter
       const matchesSearch =
         car.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         car.category.toLowerCase().includes(searchQuery.toLowerCase());
 
-      // Price filter
       const matchesPrice =
         car.price.daily.amount >= filters.priceRange[0] && car.price.daily.amount <= filters.priceRange[1];
 
-      // Year filter
       const matchesYear = car.year >= filters.yearRange[0] && car.year <= filters.yearRange[1];
 
-      // Seat filter
       const matchesSeats = car.features.seats >= filters.seatRange[0] && car.features.seats <= filters.seatRange[1];
 
-      // Category filter
       const matchesCategory = filters.category === 'all' || car.category === filters.category;
 
-      // Transmission filter
       const matchesTransmission = filters.transmission === 'all' || car.features.transmission === filters.transmission;
 
-      // Fuel filter
       const matchesFuel = filters.fuel === 'all' || car.features.fuel === filters.fuel;
 
       return (
@@ -96,11 +103,14 @@ export default function BrandContent({ brandData, brandCars }: { brandData: any;
     filters.category !== 'all' || filters.transmission !== 'all' || filters.fuel !== 'all' || searchQuery !== '';
 
   return (
-    <div className='max-w-7xl mx-auto px-6 lg:px-8'>
+    <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
       {/* Back Button */}
       <div className='mb-8'>
         <Link href='/brands'>
-          <Button variant='ghost' className='gap-2 text-gray-600 hover:text-gray-900'>
+          <Button
+            variant='ghost'
+            className='gap-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors duration-200 font-normal'
+          >
             <ArrowLeft size={16} />
             Back to Brands
           </Button>
@@ -109,145 +119,145 @@ export default function BrandContent({ brandData, brandCars }: { brandData: any;
 
       {/* Brand Header */}
       <motion.div
-        className='bg-white rounded-lg p-8 md:p-12 border border-gray-50 shadow-sm mb-16'
+        className='bg-white rounded-2xl sm:rounded-3xl p-8 md:p-12 border border-slate-200 shadow-sm mb-12 sm:mb-16'
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className='flex flex-col md:flex-row items-start md:items-center gap-8'>
-          <div className='flex-grow'>
-            <div className='flex flex-col md:flex-row md:items-center md:justify-between mb-4'>
+        <div className='grid md:grid-cols-3 gap-8 md:gap-12 items-center mb-8'>
+          {/* Logo */}
+          <div className='flex justify-center md:justify-start'>
+            <div className='relative w-32 h-32 sm:w-40 sm:h-40'>
+              <div className='absolute inset-0 bg-slate-50 rounded-2xl' />
+              <div className='absolute inset-0 flex items-center justify-center'>
+                <Image
+                  src={brandData.logo}
+                  alt={brandData.name}
+                  width={120}
+                  height={120}
+                  className='object-contain drop-shadow-lg'
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Brand Info */}
+          <div className='md:col-span-2'>
+            <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4'>
               <div>
-                <h1 className='text-4xl md:text-5xl font-light text-gray-900 mb-2 tracking-tight'>{brandData.name}</h1>
-                <p className='text-xl text-gray-500 font-light'>{brandData.description}</p>
+                <h1 className='text-3xl sm:text-4xl md:text-5xl font-semibold text-slate-900 mb-2 tracking-tight'>
+                  {brandData.name}
+                </h1>
+                <p className='text-lg sm:text-xl text-slate-600 font-normal'>{brandData.description}</p>
               </div>
-              <div className='flex items-center gap-2 mt-4 md:mt-0'>
-                <div className='flex items-center gap-1'>
-                  <Star className='w-5 h-5 text-yellow-500 fill-current' />
-                  <span className='text-lg font-medium text-gray-900'>{brandData.rating}</span>
+              <div className='flex items-center gap-2 mt-4 sm:mt-0'>
+                <div className='flex items-center gap-1.5 bg-amber-50 px-4 py-2 rounded-xl'>
+                  <Star className='w-5 h-5 text-amber-500 fill-amber-500' />
+                  <span className='text-lg font-semibold text-slate-900'>{brandData.rating}</span>
                 </div>
-                <Badge variant='secondary' className='ml-2'>
-                  {brandData.category}
-                </Badge>
+                <Badge className='bg-blue-50 text-blue-700 border-blue-200 font-semibold'>{brandData.category}</Badge>
               </div>
             </div>
 
-            <div className='grid grid-cols-2 md:grid-cols-4 gap-4 mb-6'>
-              <div className='text-center'>
-                <div className='text-2xl font-bold text-gray-900'>{brandData.vehicleCount}</div>
-                <div className='text-sm text-gray-400 font-light'>Available Cars</div>
-              </div>
-              <div className='text-center'>
-                <div className='text-2xl font-bold text-gray-900'>{brandData.established}</div>
-                <div className='text-sm text-gray-400 font-light'>Established</div>
-              </div>
-              <div className='text-center'>
-                <div className='text-2xl font-bold text-gray-900'>
-                  {new Date().getFullYear() - brandData.established}
-                </div>
-                <div className='text-sm text-gray-400 font-light'>Years Experience</div>
-              </div>
-              <div className='text-center'>
-                <div className='text-2xl font-bold text-gray-900'>{brandData.country}</div>
-                <div className='text-sm text-gray-400 font-light'>Origin</div>
-              </div>
-            </div>
+            <p className='text-slate-600 font-normal leading-relaxed mb-6'>{brandData.about}</p>
 
-            <p className='text-gray-500 font-light leading-relaxed mb-6'>{brandData.about}</p>
-
-            <div className='flex flex-wrap gap-4 text-sm text-gray-400'>
-              <div className='flex items-center gap-2'>
-                <MapPin className='w-4 h-4' />
-                <span>{brandData.headquarters}</span>
-              </div>
-              <div className='flex items-center gap-2'>
-                <Users className='w-4 h-4' />
-                <span>Founded by {brandData.founder}</span>
-              </div>
+            <div className='grid grid-cols-2 sm:grid-cols-4 gap-4'>
+              {[
+                { icon: Users, label: 'Available Cars', value: brandData.vehicleCount },
+                { icon: Calendar, label: 'Established', value: brandData.established },
+                { icon: Award, label: 'Years Experience', value: new Date().getFullYear() - brandData.established },
+                { icon: Globe, label: 'Origin', value: brandData.country },
+              ].map((stat) => {
+                const Icon = stat.icon;
+                return (
+                  <div key={stat.label} className='text-center bg-slate-50 rounded-xl p-4'>
+                    <Icon className='w-6 h-6 text-blue-600 mx-auto mb-2' />
+                    <div className='text-xl font-bold text-slate-900'>{stat.value}</div>
+                    <div className='text-xs text-slate-500 font-medium'>{stat.label}</div>
+                  </div>
+                );
+              })}
             </div>
+          </div>
+        </div>
+
+        <div className='flex flex-wrap gap-6 text-sm text-slate-600 pt-6 border-t border-slate-200'>
+          <div className='flex items-center gap-2'>
+            <MapPin className='w-4 h-4 text-slate-400' />
+            <span className='font-normal'>{brandData.headquarters}</span>
+          </div>
+          <div className='flex items-center gap-2'>
+            <Users className='w-4 h-4 text-slate-400' />
+            <span className='font-normal'>Founded by {brandData.founder}</span>
           </div>
         </div>
       </motion.div>
 
-      {/* Cars Section */}
+      {/* Cars Section Header */}
       <div className='mb-8'>
-        <div className='flex items-center justify-between mb-12'>
+        <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6'>
           <div>
-            <h2 className='text-3xl font-light text-gray-900 mb-2'>Available {brandData.name} Cars</h2>
-            <p className='text-gray-400 font-light'>Choose from our curated selection of {brandData.name} vehicles</p>
+            <h2 className='text-2xl sm:text-3xl font-semibold text-slate-900 mb-2'>
+              Available {brandData.name} Vehicles
+            </h2>
+            <p className='text-slate-600 font-normal'>Choose from our curated selection</p>
           </div>
-          <div className='text-sm text-gray-400 font-light'>{filteredCars.length} cars available</div>
+          <Badge className='bg-slate-100 text-slate-700 border-0 font-medium px-4 py-2 mt-4 sm:mt-0'>
+            {filteredCars.length} vehicles available
+          </Badge>
         </div>
 
-        {/* Search and Filters Section */}
-        <div className='bg-white rounded-lg p-8 border border-gray-50 shadow-sm mb-16'>
-          {/* Search and Filter Controls Row */}
-          <div className='flex flex-col lg:flex-row gap-6 mb-8'>
-            {/* Search Bar */}
+        {/* Search and Filters */}
+        <div className='bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm mb-8'>
+          <div className='flex flex-col lg:flex-row gap-4 sm:gap-6 mb-6'>
             <div className='relative flex-1'>
-              <Search className='absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400' />
+              <Search className='absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400' />
               <Input
                 type='text'
-                placeholder='Search cars by name or category...'
+                placeholder='Search vehicles by name or category...'
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className='pl-12 pr-4 py-4 text-base bg-white border border-gray-100 rounded-lg focus:border-gray-300 focus:ring-0 transition-all duration-200 font-light'
+                className='pl-12 pr-4 py-5 text-sm sm:text-base bg-white border-slate-200 rounded-xl focus:border-slate-400 focus:ring-1 focus:ring-slate-200 transition-all duration-200 font-normal placeholder:text-slate-400'
               />
             </div>
 
-            {/* Filter Controls */}
             <div className='flex items-center gap-3'>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button
-                  variant='outline'
-                  onClick={() => setShowFilters(!showFilters)}
-                  className='gap-2 text-gray-600 hover:text-gray-900 whitespace-nowrap border-gray-200 hover:border-gray-300 font-light transition-all duration-200'
-                >
-                  <Filter size={16} />
-                  Filters
-                  {hasActiveFilters && (
-                    <Badge variant='secondary' className='ml-1 text-xs bg-gray-100 text-gray-600'>
-                      Active
-                    </Badge>
-                  )}
-                </Button>
-              </motion.div>
+              <Button
+                variant='outline'
+                onClick={() => setShowFilters(!showFilters)}
+                className='gap-2 text-slate-700 hover:text-slate-900 whitespace-nowrap border-slate-200 hover:border-slate-300 hover:bg-slate-50 font-normal transition-all duration-200 rounded-xl px-6 py-5'
+              >
+                <Filter size={16} />
+                Filters
+                {hasActiveFilters && <Badge className='ml-1 text-xs bg-slate-900 text-white border-0'>Active</Badge>}
+              </Button>
               {hasActiveFilters && (
-                <motion.div
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -10 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                <Button
+                  variant='ghost'
+                  onClick={resetFilters}
+                  className='gap-2 text-slate-500 hover:text-slate-700 hover:bg-slate-100 text-sm whitespace-nowrap font-normal transition-all duration-200'
                 >
-                  <Button
-                    variant='ghost'
-                    onClick={resetFilters}
-                    className='gap-2 text-gray-400 hover:text-gray-600 text-sm whitespace-nowrap font-light transition-all duration-200'
-                  >
-                    <X size={14} />
-                    Clear All
-                  </Button>
-                </motion.div>
+                  <X size={14} />
+                  Clear All
+                </Button>
               )}
             </div>
           </div>
 
-          {/* Filters Panel */}
           {showFilters && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
-              className='border-t border-gray-50 pt-8 mt-6'
+              className='border-t border-slate-200 pt-6 mt-6'
             >
-              <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-12'>
+              <div className='grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8'>
                 {/* Price Range */}
-                <div className='space-y-6'>
+                <div className='space-y-4'>
                   <div>
-                    <h4 className='text-sm font-light text-gray-600 mb-2'>Price Range (AED)</h4>
-                    <div className='flex items-center gap-2 text-xs text-gray-400'>
+                    <h4 className='text-sm font-medium text-slate-700 mb-2'>Daily Price (AED)</h4>
+                    <div className='flex items-center gap-2 text-xs text-slate-500'>
                       <span>{filters.priceRange[0]} AED</span>
                       <span>-</span>
                       <span>{filters.priceRange[1]} AED</span>
@@ -258,16 +268,18 @@ export default function BrandContent({ brandData, brandCars }: { brandData: any;
                     max={5000}
                     step={100}
                     value={filters.priceRange}
-                    onValueChange={(value) => setFilters((prev) => ({ ...prev, priceRange: value as [number, number] }))}
+                    onValueChange={(value) =>
+                      setFilters((prev) => ({ ...prev, priceRange: value as [number, number] }))
+                    }
                     className='w-full'
                   />
                 </div>
 
                 {/* Year Range */}
-                <div className='space-y-6'>
+                <div className='space-y-4'>
                   <div>
-                    <h4 className='text-sm font-light text-gray-600 mb-2'>Year Range</h4>
-                    <div className='flex items-center gap-2 text-xs text-gray-400'>
+                    <h4 className='text-sm font-medium text-slate-700 mb-2'>Year Range</h4>
+                    <div className='flex items-center gap-2 text-xs text-slate-500'>
                       <span>{filters.yearRange[0]}</span>
                       <span>-</span>
                       <span>{filters.yearRange[1]}</span>
@@ -284,10 +296,10 @@ export default function BrandContent({ brandData, brandCars }: { brandData: any;
                 </div>
 
                 {/* Seat Range */}
-                <div className='space-y-6'>
+                <div className='space-y-4'>
                   <div>
-                    <h4 className='text-sm font-light text-gray-600 mb-2'>Seat Count</h4>
-                    <div className='flex items-center gap-2 text-xs text-gray-400'>
+                    <h4 className='text-sm font-medium text-slate-700 mb-2'>Seat Count</h4>
+                    <div className='flex items-center gap-2 text-xs text-slate-500'>
                       <span>{filters.seatRange[0]} seats</span>
                       <span>-</span>
                       <span>{filters.seatRange[1]} seats</span>
@@ -303,14 +315,14 @@ export default function BrandContent({ brandData, brandCars }: { brandData: any;
                   />
                 </div>
 
-                {/* Category Filter */}
+                {/* Category */}
                 <div className='space-y-4'>
-                  <label className='text-sm font-light text-gray-600'>Category</label>
+                  <label className='text-sm font-medium text-slate-700'>Category</label>
                   <Select
                     value={filters.category}
                     onValueChange={(value) => setFilters((prev) => ({ ...prev, category: value }))}
                   >
-                    <SelectTrigger className='w-full border-gray-100 focus:border-gray-300'>
+                    <SelectTrigger className='w-full border-slate-200 focus:border-slate-400 rounded-xl'>
                       <SelectValue placeholder='Select category' />
                     </SelectTrigger>
                     <SelectContent>
@@ -324,14 +336,14 @@ export default function BrandContent({ brandData, brandCars }: { brandData: any;
                   </Select>
                 </div>
 
-                {/* Transmission Filter */}
+                {/* Transmission */}
                 <div className='space-y-4'>
-                  <label className='text-sm font-light text-gray-600'>Transmission</label>
+                  <label className='text-sm font-medium text-slate-700'>Transmission</label>
                   <Select
                     value={filters.transmission}
                     onValueChange={(value) => setFilters((prev) => ({ ...prev, transmission: value }))}
                   >
-                    <SelectTrigger className='w-full border-gray-100 focus:border-gray-300'>
+                    <SelectTrigger className='w-full border-slate-200 focus:border-slate-400 rounded-xl'>
                       <SelectValue placeholder='Select transmission' />
                     </SelectTrigger>
                     <SelectContent>
@@ -345,14 +357,14 @@ export default function BrandContent({ brandData, brandCars }: { brandData: any;
                   </Select>
                 </div>
 
-                {/* Fuel Filter */}
+                {/* Fuel */}
                 <div className='space-y-4'>
-                  <label className='text-sm font-light text-gray-600'>Fuel Type</label>
+                  <label className='text-sm font-medium text-slate-700'>Fuel Type</label>
                   <Select
                     value={filters.fuel}
                     onValueChange={(value) => setFilters((prev) => ({ ...prev, fuel: value }))}
                   >
-                    <SelectTrigger className='w-full border-gray-100 focus:border-gray-300'>
+                    <SelectTrigger className='w-full border-slate-200 focus:border-slate-400 rounded-xl'>
                       <SelectValue placeholder='Select fuel type' />
                     </SelectTrigger>
                     <SelectContent>
@@ -370,156 +382,134 @@ export default function BrandContent({ brandData, brandCars }: { brandData: any;
           )}
         </div>
 
-        <Suspense
-          fallback={
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
-              {Array.from({ length: 3 }).map((_, i) => (
-                <div key={i} className='h-96 bg-gray-200 rounded-2xl animate-pulse' />
-              ))}
+        {/* Cars Grid */}
+        {filteredCars.length > 0 ? (
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8'>
+            {filteredCars.map((car: any, index: number) => (
+              <CarCard key={car.id} car={car} index={index} />
+            ))}
+          </div>
+        ) : (
+          <div className='text-center py-16'>
+            <div className='w-24 h-24 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-slate-200'>
+              <Search className='w-12 h-12 text-slate-400' />
             </div>
-          }
-        >
-          {filteredCars.length > 0 ? (
-            <motion.div
-              className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10'
-              initial='hidden'
-              animate='visible'
-              variants={{
-                hidden: { opacity: 0 },
-                visible: {
-                  opacity: 1,
-                  transition: {
-                    staggerChildren: 0.08,
-                    delayChildren: 0.2,
-                  },
-                },
-              }}
+            <h3 className='text-xl font-medium text-slate-900 mb-2'>No vehicles found</h3>
+            <p className='text-slate-600 font-normal mb-6'>Try adjusting your search or filters</p>
+            <Button
+              variant='outline'
+              onClick={resetFilters}
+              className='gap-2 border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 font-normal rounded-xl px-6 py-5'
             >
-              {filteredCars.map((car: any) => (
-                <CarCard key={car.id} car={car} />
-              ))}
-            </motion.div>
-          ) : (
-            <div className='text-center py-16'>
-              <div className='w-24 h-24 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6'>
-                <Search className='w-12 h-12 text-gray-300' />
-              </div>
-              <h3 className='text-xl font-light text-gray-900 mb-2'>No cars found</h3>
-              <p className='text-gray-400 font-light mb-6'>
-                Try adjusting your search criteria or filters to find more cars.
-              </p>
-              <Button variant='outline' onClick={resetFilters} className='gap-2 border-gray-200 hover:border-gray-300 font-light'>
-                <X size={16} />
-                Clear All Filters
-              </Button>
-            </div>
-          )}
-        </Suspense>
+              <X size={16} />
+              Clear All Filters
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
 }
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-    },
-  },
-};
-
-function CarCard({ car }: { car: any }) {
+function CarCard({ car, index }: { car: any; index: number }) {
   return (
     <motion.div
-      className='group relative bg-white rounded-lg overflow-hidden border border-gray-100 hover:border-gray-200 transition-all duration-300 hover:shadow-sm'
-      variants={cardVariants}
-      whileHover={{ y: -2 }}
-      transition={{ duration: 0.3 }}
+      className='group relative bg-white/95 backdrop-blur-sm rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl hover:shadow-slate-200/50'
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: index * 0.05 }}
+      whileHover={{ y: -8 }}
     >
-      <div className='relative h-64 overflow-hidden'>
+      {/* Image */}
+      <div className='relative h-52 sm:h-64 overflow-hidden bg-slate-100'>
         <Image
           src={car.images[0]}
           alt={car.name}
           fill
-          className='object-cover group-hover:scale-105 transition-transform duration-500'
+          className='object-cover group-hover:scale-110 transition-transform duration-500'
           sizes='(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw'
         />
         {car.premium && (
           <div className='absolute top-4 left-4'>
-            <Badge className='bg-white/90 text-gray-700 border-0 shadow-sm text-xs font-light'>
+            <Badge className='bg-gradient-to-r from-amber-500 to-orange-600 text-white border-0 shadow-lg text-xs font-semibold px-3 py-1.5 uppercase tracking-wide'>
               Premium
             </Badge>
           </div>
         )}
-        <div className='absolute top-4 right-4 bg-gray-900/80 backdrop-blur-sm rounded-full px-3 py-1 text-white text-xs font-light'>
-          +{car.images.length - 1} more
+        <div className='absolute top-4 right-4 bg-slate-900/90 backdrop-blur-md rounded-lg px-3 py-1.5 text-white text-xs font-medium shadow-lg'>
+          {car.images.length} photos
         </div>
       </div>
 
-      <div className='p-8'>
+      {/* Content */}
+      <div className='p-6 sm:p-8'>
         <div className='mb-6'>
           <Link href={car.link}>
-            <h3 className='text-xl font-light text-gray-900 mb-3 hover:text-gray-700 transition-colors duration-200 cursor-pointer'>
+            <h3 className='text-lg sm:text-xl font-semibold text-slate-900 mb-3 hover:text-blue-600 transition-colors duration-200 cursor-pointer'>
               {car.name}
             </h3>
           </Link>
-          <div className='flex items-center gap-4 text-sm text-gray-400 mb-4'>
-            <span className='flex items-center gap-1'>
-              <Calendar className='w-4 h-4' />
+          <div className='flex items-center gap-3 text-xs sm:text-sm text-slate-600 mb-4 flex-wrap'>
+            <span className='flex items-center gap-1.5'>
+              <Calendar className='w-4 h-4 text-slate-400' />
               {car.year}
             </span>
-            <span className='flex items-center gap-1'>
-              <Car className='w-4 h-4' />
+            <div className='w-1 h-1 rounded-full bg-slate-300' />
+            <span className='flex items-center gap-1.5'>
+              <Gauge className='w-4 h-4 text-slate-400' />
               {car.category}
             </span>
           </div>
           <div className='flex flex-wrap gap-2 mb-4'>
-            <Badge variant='secondary' className='text-xs bg-gray-50 text-gray-600 border-0'>
+            <Badge className='text-xs bg-slate-100 text-slate-700 border-0 font-medium px-3 py-1.5'>
+              <Settings className='w-3 h-3 mr-1' />
               {car.features.transmission}
             </Badge>
-            <Badge variant='secondary' className='text-xs bg-gray-50 text-gray-600 border-0'>
+            <Badge className='text-xs bg-slate-100 text-slate-700 border-0 font-medium px-3 py-1.5'>
+              <Fuel className='w-3 h-3 mr-1' />
               {car.features.fuel}
             </Badge>
-            <Badge variant='secondary' className='text-xs bg-gray-50 text-gray-600 border-0'>
+            <Badge className='text-xs bg-slate-100 text-slate-700 border-0 font-medium px-3 py-1.5'>
+              <Users className='w-3 h-3 mr-1' />
               {car.features.seats} seats
             </Badge>
           </div>
         </div>
 
-        <div className='mb-6'>
-          <div className='flex items-center justify-between mb-2'>
-            <span className='text-sm text-gray-400 font-light'>Daily Rate</span>
-            <span className='text-lg font-light text-gray-900'>
-              {car.price.daily.amount} {car.price.daily.currency}
-            </span>
+        <div className='mb-6 bg-slate-50 rounded-xl p-5 border border-slate-200'>
+          <div className='flex items-baseline justify-between mb-1'>
+            <span className='text-sm text-slate-600 font-normal'>Daily Rate</span>
+            <div className='flex items-baseline gap-1'>
+              <span className='text-3xl font-bold text-slate-900'>{car.price.daily.amount}</span>
+              <span className='text-sm text-slate-600 ml-1.5 font-medium'>{car.price.daily.currency}</span>
+            </div>
           </div>
-          <div className='text-xs text-gray-400'>Up to {car.price.daily.km} km included</div>
+          <div className='text-xs text-slate-500 text-right'>Up to {car.price.daily.km} km included</div>
         </div>
 
-        <div className='pt-6 border-t border-gray-50'>
+        <div className='pt-6 border-t border-slate-200'>
           <div className='flex items-center justify-between'>
-            <p className='text-xs text-gray-400 font-light'>
-              Contact: <span className='text-gray-600 font-light'>{car.contact.name}</span>
-            </p>
-            <div className='flex items-center gap-3'>
+            <div>
+              <p className='text-xs text-slate-500 font-normal mb-1'>Owner</p>
+              <p className='text-sm text-slate-900 font-semibold truncate'>{car.contact.name}</p>
+            </div>
+            <div className='flex items-center gap-2 shrink-0'>
               <a
                 href={`tel:${car.contact.phone}`}
-                className='p-2 rounded-full bg-gray-900 text-white hover:bg-gray-800 transition-colors duration-200'
+                className='p-3 rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5'
                 onClick={(e) => e.stopPropagation()}
               >
-                <Phone size={14} />
+                <Phone size={16} />
               </a>
               <a
                 href={`https://wa.me/${car.contact.whatsapp.replace(/[^0-9]/g, '')}`}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='p-2 rounded-full bg-gray-600 text-white hover:bg-gray-700 transition-colors duration-200'
+                className='p-3 rounded-lg bg-green-600 text-white hover:bg-green-700 transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5'
                 onClick={(e) => e.stopPropagation()}
               >
-                <MessageCircle size={14} />
+                <MessageCircle size={16} />
               </a>
             </div>
           </div>

@@ -72,14 +72,14 @@ const locationData: LocationData = {
       city: 'Dubai',
       description: 'Central business district with modern skyscrapers and corporate facilities',
       image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?w=800&h=400&fit=crop',
-      coordinates: { lat: 25.1888, lng: 55.2630 },
+      coordinates: { lat: 25.1888, lng: 55.263 },
       operatingHours: '6:00 AM - 12:00 AM',
       contactPhone: '+971 4 234 5678',
       features: ['Business Center', 'Fast Track Service', 'Corporate Rates', 'Airport Transfer'],
       nearbyAttractions: ['Burj Khalifa', 'Dubai Mall', 'Business Bay Bridge', 'Dubai Canal'],
       carsAvailable: 32,
     },
-    'jumeirah': {
+    jumeirah: {
       name: 'Jumeirah',
       city: 'Dubai',
       description: 'Prestigious residential area known for luxury resorts and pristine beaches',
@@ -93,7 +93,7 @@ const locationData: LocationData = {
     },
   },
   'abu-dhabi': {
-    'corniche': {
+    corniche: {
       name: 'Corniche',
       city: 'Abu Dhabi',
       description: 'Scenic waterfront promenade with parks and cultural attractions',
@@ -171,8 +171,9 @@ export default function LocationPage({ params }: LocationPageProps) {
   const cityData = locationData[params.city as keyof typeof locationData];
   const location = cityData?.[params.location as keyof typeof cityData];
 
-  const filteredCars = locationCars.filter(car => {
-    const matchesSearch = searchQuery === '' ||
+  const filteredCars = locationCars.filter((car) => {
+    const matchesSearch =
+      searchQuery === '' ||
       car.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       car.category.toLowerCase().includes(searchQuery.toLowerCase());
 
@@ -183,12 +184,12 @@ export default function LocationPage({ params }: LocationPageProps) {
 
   if (!location) {
     return (
-      <main className='min-h-screen bg-white font-montserrat py-20 flex items-center justify-center'>
+      <main className='min-h-screen pt-40 bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 font-montserrat py-20 flex items-center justify-center'>
         <div className='text-center'>
-          <h1 className='text-3xl font-light text-gray-900 mb-4'>Location Not Found</h1>
-          <p className='text-gray-500 font-light'>The location you're looking for doesn't exist.</p>
-          <Link href='/rent'>
-            <Button className='mt-6 bg-gray-900 hover:bg-gray-800 text-white font-light'>
+          <h1 className='text-3xl font-semibold text-slate-900 mb-4'>Location Not Found</h1>
+          <p className='text-slate-600 font-normal'>The location you're looking for doesn't exist.</p>
+          <Link href='/locations'>
+            <Button className='mt-6 bg-primary hover:bg-primary/90 text-white font-semibold shadow-lg shadow-primary/25'>
               Browse All Locations
             </Button>
           </Link>
@@ -198,15 +199,10 @@ export default function LocationPage({ params }: LocationPageProps) {
   }
 
   return (
-    <main className='min-h-screen bg-white font-montserrat py-20'>
+    <main className='min-h-screen pt-40 bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 font-montserrat py-20'>
       <div className='max-w-7xl mx-auto px-6 lg:px-8'>
         {/* Header */}
-        <motion.header
-          className='mb-12'
-          variants={headerVariants}
-          initial='hidden'
-          animate='visible'
-        >
+        <motion.header className='mb-12' variants={headerVariants} initial='hidden' animate='visible'>
           <div className='relative h-64 md:h-80 rounded-lg overflow-hidden mb-8'>
             <Image
               src={location.image}
@@ -222,12 +218,8 @@ export default function LocationPage({ params }: LocationPageProps) {
                   <MapPin className='w-6 h-6' />
                   <span className='text-lg font-light'>{location.city}</span>
                 </div>
-                <h1 className='text-4xl md:text-5xl font-light mb-4 tracking-tight'>
-                  {location.name}
-                </h1>
-                <p className='text-lg font-light leading-relaxed max-w-2xl'>
-                  {location.description}
-                </p>
+                <h1 className='text-4xl md:text-5xl font-light mb-4 tracking-tight'>{location.name}</h1>
+                <p className='text-lg font-light leading-relaxed max-w-2xl'>{location.description}</p>
               </div>
             </div>
           </div>
@@ -242,8 +234,8 @@ export default function LocationPage({ params }: LocationPageProps) {
           viewport={{ once: true }}
         >
           <div className='grid md:grid-cols-3 gap-8'>
-            <div className='bg-white rounded-lg p-8 border border-gray-50 shadow-sm'>
-              <h3 className='text-xl font-light text-gray-900 mb-6'>Location Details</h3>
+            <div className='bg-white rounded-2xl p-8 border border-slate-200 shadow-sm'>
+              <h3 className='text-xl font-semibold text-slate-900 mb-6'>Location Details</h3>
               <div className='space-y-4'>
                 <div className='flex items-center gap-3'>
                   <Clock className='w-5 h-5 text-gray-400' />
@@ -327,10 +319,7 @@ export default function LocationPage({ params }: LocationPageProps) {
                 <option value='economy'>Economy</option>
               </select>
 
-              <Button
-                variant='outline'
-                className='gap-2 border-gray-200 hover:border-gray-300 font-light'
-              >
+              <Button variant='outline' className='gap-2 border-gray-200 hover:border-gray-300 font-light'>
                 <Filter size={16} />
                 More Filters
               </Button>
@@ -371,9 +360,7 @@ export default function LocationPage({ params }: LocationPageProps) {
                     />
                     {car.available && (
                       <div className='absolute top-4 right-4'>
-                        <Badge className='bg-green-50 text-green-700 border-0 text-xs font-light'>
-                          Available Now
-                        </Badge>
+                        <Badge className='bg-green-50 text-green-700 border-0 text-xs font-light'>Available Now</Badge>
                       </div>
                     )}
                   </div>
@@ -413,9 +400,7 @@ export default function LocationPage({ params }: LocationPageProps) {
                         <p className='text-2xl font-light text-gray-900'>{car.price} AED</p>
                         <p className='text-xs text-gray-400 font-light'>per day</p>
                       </div>
-                      <Button className='bg-gray-900 hover:bg-gray-800 text-white font-light'>
-                        Book Now
-                      </Button>
+                      <Button className='bg-gray-900 hover:bg-gray-800 text-white font-light'>Book Now</Button>
                     </div>
                   </div>
                 </Link>
@@ -443,21 +428,14 @@ export default function LocationPage({ params }: LocationPageProps) {
                 Clear Filters
               </Button>
               <Link href='/rent'>
-                <Button className='bg-gray-900 hover:bg-gray-800 text-white font-light'>
-                  Browse All Cars
-                </Button>
+                <Button className='bg-gray-900 hover:bg-gray-800 text-white font-light'>Browse All Cars</Button>
               </Link>
             </div>
           )}
         </motion.section>
 
         {/* Map Section (Placeholder) */}
-        <motion.section
-          variants={cardVariants}
-          initial='hidden'
-          whileInView='visible'
-          viewport={{ once: true }}
-        >
+        <motion.section variants={cardVariants} initial='hidden' whileInView='visible' viewport={{ once: true }}>
           <div className='bg-white rounded-lg p-8 border border-gray-50 shadow-sm'>
             <h3 className='text-2xl font-light text-gray-900 mb-6'>Location & Directions</h3>
             <div className='bg-gray-100 rounded-lg h-64 flex items-center justify-center'>

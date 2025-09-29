@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Car, Wrench, MapPin, Award, ChevronDown } from 'lucide-react';
 import Link from 'next/link';
 import { LiquidButton } from './animate-ui/primitives/buttons/liquid';
 import { UserRound } from './animate-ui/icons/user-round';
@@ -42,7 +42,7 @@ const mobileMenuVariants = {
     y: 0,
     transition: {
       duration: 0.3,
-      staggerChildren: 0.1,
+      staggerChildren: 0.08,
       delayChildren: 0.1,
     },
   },
@@ -68,6 +68,12 @@ const mobileItemVariants = {
   },
 };
 
+const navLinks = [
+  { href: '/rent', label: 'Rent Cars', icon: Car },
+  { href: '/auto-services', label: 'Auto Services', icon: Wrench },
+  { href: '/brands', label: 'Brands', icon: Award },
+];
+
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -78,7 +84,7 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        className='fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-md border-b border-white/10'
+        className='fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-white/10 shadow-lg shadow-slate-900/10'
         variants={navVariants}
         initial='hidden'
         animate='visible'
@@ -87,46 +93,44 @@ export default function Navbar() {
           <div className='flex justify-between items-center h-16 md:h-20'>
             {/* Logo */}
             <motion.div variants={itemVariants}>
-              <Link href='/' className='text-white flex items-center'>
-                <TextRoll className='text-xl md:text-2xl font-light tracking-wide font-montserrat hover:text-primary transition-colors duration-300'>
+              <Link href='/' className='text-white flex items-center group'>
+                <TextRoll className='text-xl md:text-2xl font-light tracking-wide font-montserrat group-hover:text-primary transition-colors duration-300'>
                   YAYA
                 </TextRoll>
-                <TextRoll className='text-xl md:text-2xl tracking-wide font-montserrat hover:text-primary transition-colors duration-300 font-medium'>
+                <TextRoll className='text-xl md:text-2xl tracking-wide font-montserrat group-hover:text-primary transition-colors duration-300 font-semibold'>
                   GO
                 </TextRoll>
               </Link>
             </motion.div>
 
             {/* Desktop Navigation */}
-            <div className='hidden lg:flex items-center gap-12 font-montserrat'>
+            <div className='hidden lg:flex items-center gap-8 font-montserrat'>
               <motion.nav variants={itemVariants}>
-                <ul className='flex items-center gap-8'>
-                  <li>
-                    <Link
-                      className='text-white/90 hover:text-primary text-sm font-light tracking-wide transition-colors duration-300'
-                      href='/rent'
-                    >
-                      Rent a car
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className='text-white/90 hover:text-primary text-sm font-light tracking-wide transition-colors duration-300'
-                      href='/auto-services'
-                    >
-                      Auto Services
-                    </Link>
-                  </li>
+                <ul className='flex items-center gap-6'>
+                  {navLinks.map((link) => {
+                    const Icon = link.icon;
+                    return (
+                      <li key={link.href}>
+                        <Link
+                          className='flex items-center gap-2 text-white/90 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 group'
+                          href={link.href}
+                        >
+                          <Icon className='w-4 h-4 group-hover:scale-110 transition-transform duration-300' />
+                          {link.label}
+                        </Link>
+                      </li>
+                    );
+                  })}
                 </ul>
               </motion.nav>
 
               <motion.div variants={itemVariants}>
                 <AnimateIcon
-                  className='flex items-center gap-2 cursor-pointer text-white/90 hover:text-white transition-colors duration-300'
+                  className='flex items-center gap-2 cursor-pointer text-white/90 hover:text-white transition-colors duration-300 px-4 py-2 rounded-lg hover:bg-white/5'
                   animateOnHover
                 >
                   <UserRound className='w-4 h-4' />
-                  <Link href='/auth' className='text-sm font-light'>
+                  <Link href='/auth' className='text-sm font-medium'>
                     Sign in
                   </Link>
                 </AnimateIcon>
@@ -138,10 +142,10 @@ export default function Navbar() {
                   fillHeight='2px'
                   hoverScale={1.05}
                   tapScale={0.95}
-                  className='cursor-pointer text-sm font-medium px-6 py-2 h-10 overflow-hidden [--liquid-button-color:var(--primary)] [--liquid-button-background-color:var(--primary)] text-white hover:text-white bg-primary/20 border border-primary/30 backdrop-blur-sm'
+                  className='cursor-pointer text-sm font-semibold px-6 py-2.5 h-10 overflow-hidden rounded-lg [--liquid-button-color:var(--primary)] [--liquid-button-background-color:var(--primary)] text-white hover:text-white bg-primary shadow-lg shadow-primary/25'
                 >
-                  <Link href='/auth/register?as=earner' className='text-sm font-light'>
-                    Earn With Us
+                  <Link href='/listing' className='text-sm font-medium'>
+                    List Your Car
                   </Link>
                 </LiquidButton>
               </motion.div>
@@ -149,7 +153,7 @@ export default function Navbar() {
 
             {/* Mobile Menu Button */}
             <motion.button
-              className='lg:hidden text-white p-2'
+              className='lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors duration-200'
               onClick={toggleMobileMenu}
               variants={itemVariants}
               whileTap={{ scale: 0.95 }}
@@ -186,98 +190,89 @@ export default function Navbar() {
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className='fixed inset-0 bg-black/30 backdrop-blur-xl z-40 lg:hidden'
+            className='fixed inset-0 bg-slate-900/98 backdrop-blur-xl z-40 lg:hidden'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             onClick={toggleMobileMenu}
           >
-            {/* Full Page Mobile Menu Panel */}
             <motion.div
-              className='absolute inset-0 bg-gradient-to-br from-white/20 via-white/10 to-white/5 backdrop-blur-2xl'
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            >
-              <div className='flex flex-col h-full justify-center items-center px-8 font-montserrat'>
-                {/* Navigation Links */}
-                <motion.nav
-                  className='text-center space-y-8 mb-16'
-                  variants={mobileMenuVariants}
-                  initial='hidden'
-                  animate='visible'
-                  exit='exit'
-                >
-                  <motion.div variants={mobileItemVariants}>
-                    <Link
-                      className='block text-white text-3xl md:text-4xl font-light tracking-wide hover:text-primary transition-colors duration-500 py-4'
-                      href='/rent'
-                      onClick={toggleMobileMenu}
-                    >
-                      Rent a car
-                    </Link>
-                  </motion.div>
-                  <motion.div variants={mobileItemVariants}>
-                    <Link
-                      className='block text-white text-3xl md:text-4xl font-light tracking-wide hover:text-primary transition-colors duration-500 py-4'
-                      href='/auto-services'
-                      onClick={toggleMobileMenu}
-                    >
-                      Auto Services
-                    </Link>
-                  </motion.div>
-                </motion.nav>
+              className='absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-blue-600/5'
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+            />
 
-                {/* Action Buttons */}
-                <motion.div
-                  className='space-y-6 w-full max-w-sm'
-                  variants={mobileMenuVariants}
-                  initial='hidden'
-                  animate='visible'
-                  exit='exit'
-                >
-                  <motion.button
-                    variants={mobileItemVariants}
-                    className='w-full flex items-center justify-center gap-3 text-white/90 hover:text-white text-lg font-light py-4 px-8 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300'
+            <div className='relative flex flex-col h-full justify-center items-center px-8 font-montserrat'>
+              {/* Navigation Links */}
+              <motion.nav
+                className='text-center space-y-6 mb-12'
+                variants={mobileMenuVariants}
+                initial='hidden'
+                animate='visible'
+                exit='exit'
+                onClick={(e) => e.stopPropagation()}
+              >
+                {navLinks.map((link) => {
+                  const Icon = link.icon;
+                  return (
+                    <motion.div key={link.href} variants={mobileItemVariants}>
+                      <Link
+                        className='flex items-center justify-center gap-4 text-white text-2xl md:text-3xl font-medium tracking-wide hover:text-primary transition-colors duration-300 py-4 px-6 rounded-2xl hover:bg-white/5'
+                        href={link.href}
+                        onClick={toggleMobileMenu}
+                      >
+                        <Icon className='w-7 h-7' />
+                        {link.label}
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </motion.nav>
+
+              {/* Action Buttons */}
+              <motion.div
+                className='space-y-4 w-full max-w-sm'
+                variants={mobileMenuVariants}
+                initial='hidden'
+                animate='visible'
+                exit='exit'
+                onClick={(e) => e.stopPropagation()}
+              >
+                <motion.div variants={mobileItemVariants}>
+                  <Link
+                    href='/auth'
+                    className='w-full flex items-center justify-center gap-3 text-white/90 hover:text-white text-base font-medium py-4 px-8 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300'
                     onClick={toggleMobileMenu}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
                   >
                     <UserRound className='w-5 h-5' />
-                    <Link href='/auth' className='text-sm font-light'>
-                      Sign in
-                    </Link>
-                  </motion.button>
-
-                  <motion.div variants={mobileItemVariants}>
-                    <LiquidButton
-                      delay='0.2s'
-                      fillHeight='2px'
-                      hoverScale={1.02}
-                      tapScale={0.98}
-                      className='w-full cursor-pointer text-lg font-medium py-4 px-8 rounded-2xl overflow-hidden [--liquid-button-color:var(--primary)] [--liquid-button-background-color:var(--primary)] text-white hover:text-white bg-primary/80 backdrop-blur-sm border border-primary/30'
-                      onClick={toggleMobileMenu}
-                    >
-                      <Link href='/auth/register?as=earner' className='text-sm font-light'>
-                        Earn With Us
-                      </Link>
-                    </LiquidButton>
-                  </motion.div>
+                    Sign in
+                  </Link>
                 </motion.div>
 
-                {/* Close hint */}
-                <motion.p
-                  className='absolute bottom-8 text-white/60 text-sm font-light'
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.5 }}
-                >
-                  Tap anywhere to close
-                </motion.p>
-              </div>
-            </motion.div>
+                <motion.div variants={mobileItemVariants}>
+                  <Link
+                    href='/listing'
+                    className='w-full flex items-center justify-center text-base font-semibold py-4 px-8 rounded-xl bg-primary shadow-lg shadow-primary/25 text-white hover:bg-primary/90 transition-all duration-300'
+                    onClick={toggleMobileMenu}
+                  >
+                    List Your Car
+                  </Link>
+                </motion.div>
+              </motion.div>
+
+              {/* Close hint */}
+              <motion.p
+                className='absolute bottom-8 text-white/40 text-sm font-light'
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                Tap anywhere to close
+              </motion.p>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -2,6 +2,7 @@ import Hero from '@/components/hero/hero';
 import HomeBrands from '@/components/home-brands';
 import WhyYayago from '@/components/why-yayago';
 import HomeExploreCars from '@/components/home-explore-cars';
+import HomeLocations from '@/components/home-locations';
 import WhyChooseUs from '@/components/why-choose-us';
 import HomeRentalCompany from '@/components/home-rental-company';
 
@@ -36,6 +37,7 @@ export default function Home() {
       <HomeBrands />
       <WhyYayago />
       <HomeExploreCars />
+      <HomeLocations />
       <WhyChooseUs />
       <HomeRentalCompany />
     </main>

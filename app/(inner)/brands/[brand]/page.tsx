@@ -1,12 +1,7 @@
-'use client';
-
 import { Suspense } from 'react';
-import { motion } from 'framer-motion';
-import { ArrowLeft, Star, Calendar, MapPin, Car, Users, Phone, MessageCircle } from 'lucide-react';
-import Image from 'next/image';
+import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import BrandContent from './content';
 
 interface BrandPageProps {
@@ -213,13 +208,16 @@ export default async function BrandPage({ params }: BrandPageProps) {
 
   if (!brandData) {
     return (
-      <main className='min-h-screen bg-white font-montserrat py-20'>
+      <main className='min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 font-montserrat py-20'>
         <div className='max-w-7xl mx-auto px-6'>
           <div className='text-center py-24'>
-            <h1 className='text-4xl font-light text-gray-900 mb-4'>Brand Not Found</h1>
-            <p className='text-gray-500 font-light mb-8'>The brand you're looking for doesn't exist.</p>
+            <h1 className='text-4xl font-semibold text-slate-900 mb-4'>Brand Not Found</h1>
+            <p className='text-slate-600 font-normal mb-8'>The brand you're looking for doesn't exist.</p>
             <Link href='/brands'>
-              <Button variant='outline' className='gap-2 border-gray-200 hover:border-gray-300 font-light'>
+              <Button
+                variant='outline'
+                className='gap-2 border-2 border-slate-200 hover:border-slate-300 hover:bg-slate-50 font-normal rounded-xl px-6 py-5'
+              >
                 <ArrowLeft size={16} />
                 Back to Brands
               </Button>
@@ -231,8 +229,21 @@ export default async function BrandPage({ params }: BrandPageProps) {
   }
 
   return (
-    <main className='min-h-screen bg-white font-montserrat py-20'>
-      <BrandContent brandData={brandData} brandCars={brandCars} />
+    <main className='min-h-screen bg-gradient-to-br from-slate-50 via-gray-50 to-slate-100 font-montserrat py-20'>
+      <Suspense
+        fallback={
+          <div className='max-w-7xl mx-auto px-6'>
+            <div className='h-screen flex items-center justify-center'>
+              <div className='text-center'>
+                <div className='w-16 h-16 border-4 border-slate-200 border-t-slate-600 rounded-full animate-spin mx-auto mb-4' />
+                <p className='text-slate-600'>Loading...</p>
+              </div>
+            </div>
+          </div>
+        }
+      >
+        <BrandContent brandData={brandData} brandCars={brandCars} />
+      </Suspense>
     </main>
   );
 }
