@@ -321,7 +321,7 @@ export default function HelpPage() {
                         ? 'bg-gray-900 hover:bg-gray-800 text-white'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
-                    variant={option.primary ? 'default' : 'outline'}
+                    variant={option.primary ? undefined : 'outline'}
                   >
                     {option.action}
                   </Button>

@@ -349,7 +349,7 @@ function CarContent({ carData }: { carData: any }) {
             {Object.entries(carData.specifications).map(([key, value]) => (
               <div key={key} className='flex items-center justify-between py-2 border-b border-gray-100 last:border-0'>
                 <span className='text-gray-600 font-light capitalize'>{key.replace(/([A-Z])/g, ' $1')}</span>
-                <span className='font-light text-gray-900'>{value}</span>
+                <span className='font-light text-gray-900'>{value as string}</span>
               </div>
             ))}
           </div>

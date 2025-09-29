@@ -31,8 +31,29 @@ const cardVariants = {
   },
 };
 
+interface LocationInfo {
+  name: string;
+  city: string;
+  description: string;
+  image: string;
+  coordinates: { lat: number; lng: number };
+  operatingHours: string;
+  contactPhone: string;
+  features: string[];
+  nearbyAttractions: string[];
+  carsAvailable: number;
+}
+
+interface CityData {
+  [locationKey: string]: LocationInfo;
+}
+
+interface LocationData {
+  [cityKey: string]: CityData;
+}
+
 // Mock location data
-const locationData = {
+const locationData: LocationData = {
   dubai: {
     'dubai-marina': {
       name: 'Dubai Marina',

@@ -219,7 +219,7 @@ export default function FAQPage() {
                     <motion.div
                       key={itemId}
                       className='bg-white rounded-lg border border-gray-50 shadow-sm overflow-hidden'
-                      whileHover={{ shadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}
+                      whileHover={{ boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}
                     >
                       <button
                         onClick={() => toggleItem(itemId)}
