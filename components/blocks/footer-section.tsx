@@ -45,6 +45,7 @@ const footerLinks: FooterSection[] = [
     label: 'Company',
     links: [
       { title: 'About Us', href: '/about' },
+      { title: 'Blog', href: '/blog' },
       { title: 'Contact', href: '/contact' },
       { title: 'Pricing', href: '/pricing' },
       { title: 'FAQs', href: '/faq', icon: HelpCircle },

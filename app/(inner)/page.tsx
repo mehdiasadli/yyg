@@ -5,6 +5,7 @@ import HomeExploreCars from '@/components/home-explore-cars';
 import HomeLocations from '@/components/home-locations';
 import WhyChooseUs from '@/components/why-choose-us';
 import HomeRentalCompany from '@/components/home-rental-company';
+import HomeBlog from '@/components/home-blog';
 
 export default function Home() {
   return (
@@ -40,6 +41,7 @@ export default function Home() {
       <HomeLocations />
       <WhyChooseUs />
       <HomeRentalCompany />
+      <HomeBlog />
     </main>
   );
 }

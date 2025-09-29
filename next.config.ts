@@ -16,6 +16,9 @@ const nextConfig: NextConfig = {
       {
         hostname: 'images.pexels.com',
       },
+      {
+        hostname: 'ui-avatars.com',
+      },
     ],
   },
 };
