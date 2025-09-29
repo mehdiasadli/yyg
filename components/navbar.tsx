@@ -2,8 +2,9 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Car, Wrench, MapPin, Award, ChevronDown } from 'lucide-react';
+import { Menu, X, Car, Wrench, Award } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { LiquidButton } from './animate-ui/primitives/buttons/liquid';
 import { UserRound } from './animate-ui/icons/user-round';
 import { AnimateIcon } from './animate-ui/icons/icon';
@@ -84,7 +85,7 @@ export default function Navbar() {
   return (
     <>
       <motion.header
-        className='fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-white/10 shadow-lg shadow-slate-900/10'
+        className='font-montserrat fixed top-0 left-0 right-0 z-50 bg-slate-900/95 backdrop-blur-md border-b border-white/10 shadow-lg shadow-slate-900/10'
         variants={navVariants}
         initial='hidden'
         animate='visible'
@@ -93,38 +94,29 @@ export default function Navbar() {
           <div className='flex justify-between items-center h-16 md:h-20'>
             {/* Logo */}
             <motion.div variants={itemVariants}>
-              <Link href='/' className='text-white flex items-center group'>
-                <TextRoll className='text-xl md:text-2xl font-light tracking-wide font-montserrat group-hover:text-primary transition-colors duration-300'>
-                  YAYA
-                </TextRoll>
-                <TextRoll className='text-xl md:text-2xl tracking-wide font-montserrat group-hover:text-primary transition-colors duration-300 font-semibold'>
-                  GO
-                </TextRoll>
+              <Link href='/' className='flex items-center gap-3 group'>
+                <div className='relative w-12 h-12 flex-shrink-0'>
+                  <Image
+                    src='/logos/logo-icon.svg'
+                    alt='YayaGo Logo'
+                    fill
+                    className='object-contain group-hover:scale-110 transition-transform duration-300'
+                  />
+                </div>
+                <div className='text-white flex items-center'>
+                  <TextRoll className='text-xl md:text-2xl font-light tracking-wide font-montserrat group-hover:text-primary transition-colors duration-300'>
+                    YAYA
+                  </TextRoll>
+                  <TextRoll className='text-xl md:text-2xl tracking-wide font-montserrat group-hover:text-primary transition-colors duration-300 font-semibold'>
+                    Go
+                  </TextRoll>
+                </div>
               </Link>
             </motion.div>
 
-            {/* Desktop Navigation */}
-            <div className='hidden lg:flex items-center gap-8 font-montserrat'>
-              <motion.nav variants={itemVariants}>
-                <ul className='flex items-center gap-6'>
-                  {navLinks.map((link) => {
-                    const Icon = link.icon;
-                    return (
-                      <li key={link.href}>
-                        <Link
-                          className='flex items-center gap-2 text-white/90 hover:text-primary text-sm font-medium tracking-wide transition-all duration-300 group'
-                          href={link.href}
-                        >
-                          <Icon className='w-4 h-4 group-hover:scale-110 transition-transform duration-300' />
-                          {link.label}
-                        </Link>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </motion.nav>
-
-              <motion.div variants={itemVariants}>
+            {/* Right Side Actions */}
+            <div className='flex items-center gap-4'>
+              <motion.div variants={itemVariants} className='hidden sm:block'>
                 <AnimateIcon
                   className='flex items-center gap-2 cursor-pointer text-white/90 hover:text-white transition-colors duration-300 px-4 py-2 rounded-lg hover:bg-white/5'
                   animateOnHover
@@ -136,7 +128,7 @@ export default function Navbar() {
                 </AnimateIcon>
               </motion.div>
 
-              <motion.div variants={itemVariants}>
+              <motion.div variants={itemVariants} className='hidden sm:block'>
                 <LiquidButton
                   delay='0.2s'
                   fillHeight='2px'
@@ -149,48 +141,48 @@ export default function Navbar() {
                   </Link>
                 </LiquidButton>
               </motion.div>
-            </div>
 
-            {/* Mobile Menu Button */}
-            <motion.button
-              className='lg:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors duration-200'
-              onClick={toggleMobileMenu}
-              variants={itemVariants}
-              whileTap={{ scale: 0.95 }}
-            >
-              <AnimatePresence mode='wait'>
-                {isMobileMenuOpen ? (
-                  <motion.div
-                    key='close'
-                    initial={{ rotate: -90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: 90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <X size={24} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key='menu'
-                    initial={{ rotate: 90, opacity: 0 }}
-                    animate={{ rotate: 0, opacity: 1 }}
-                    exit={{ rotate: -90, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <Menu size={24} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.button>
+              {/* Hamburger Menu Button - Always Visible */}
+              <motion.button
+                className='text-white p-2 hover:bg-white/10 rounded-lg transition-colors duration-200'
+                onClick={toggleMobileMenu}
+                variants={itemVariants}
+                whileTap={{ scale: 0.95 }}
+              >
+                <AnimatePresence mode='wait'>
+                  {isMobileMenuOpen ? (
+                    <motion.div
+                      key='close'
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <X size={24} />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key='menu'
+                      initial={{ rotate: 90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: -90, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Menu size={24} />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+            </div>
           </div>
         </div>
       </motion.header>
 
-      {/* Mobile Menu */}
+      {/* Full Page Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
-            className='fixed inset-0 bg-slate-900/98 backdrop-blur-xl z-40 lg:hidden'
+            className='fixed inset-0 bg-slate-900/98 backdrop-blur-xl z-40'
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -208,7 +200,7 @@ export default function Navbar() {
             <div className='relative flex flex-col h-full justify-center items-center px-8 font-montserrat'>
               {/* Navigation Links */}
               <motion.nav
-                className='text-center space-y-6 mb-12'
+                className='text-center space-y-4 mb-12'
                 variants={mobileMenuVariants}
                 initial='hidden'
                 animate='visible'
@@ -220,12 +212,16 @@ export default function Navbar() {
                   return (
                     <motion.div key={link.href} variants={mobileItemVariants}>
                       <Link
-                        className='flex items-center justify-center gap-4 text-white text-2xl md:text-3xl font-medium tracking-wide hover:text-primary transition-colors duration-300 py-4 px-6 rounded-2xl hover:bg-white/5'
                         href={link.href}
+                        className='group relative flex items-center justify-center gap-4 text-white text-2xl md:text-3xl lg:text-4xl font-medium tracking-wide py-4 px-6 rounded-2xl hover:bg-white/5 transition-all duration-300'
                         onClick={toggleMobileMenu}
                       >
-                        <Icon className='w-7 h-7' />
-                        {link.label}
+                        <Icon className='w-7 h-7 md:w-8 md:h-8 group-hover:scale-110 transition-transform duration-300' />
+                        <span className='relative'>
+                          {link.label}
+                          {/* Animated Underline */}
+                          <span className='absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300 ease-out' />
+                        </span>
                       </Link>
                     </motion.div>
                   );
@@ -241,7 +237,7 @@ export default function Navbar() {
                 exit='exit'
                 onClick={(e) => e.stopPropagation()}
               >
-                <motion.div variants={mobileItemVariants}>
+                <motion.div variants={mobileItemVariants} className='sm:hidden'>
                   <Link
                     href='/auth'
                     className='w-full flex items-center justify-center gap-3 text-white/90 hover:text-white text-base font-medium py-4 px-8 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 transition-all duration-300'
@@ -252,7 +248,7 @@ export default function Navbar() {
                   </Link>
                 </motion.div>
 
-                <motion.div variants={mobileItemVariants}>
+                <motion.div variants={mobileItemVariants} className='sm:hidden'>
                   <Link
                     href='/listing'
                     className='w-full flex items-center justify-center text-base font-semibold py-4 px-8 rounded-xl bg-primary shadow-lg shadow-primary/25 text-white hover:bg-primary/90 transition-all duration-300'
