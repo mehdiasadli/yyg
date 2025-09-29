@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import type { ComponentProps, ReactNode } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
@@ -19,9 +20,9 @@ const footerLinks: FooterSection[] = [
   {
     label: 'Products',
     links: [
-      { title: 'Features', href: '/features' },
+      { title: 'Find cars', href: '/rent' },
       { title: 'Pricing', href: '/pricing' },
-      { title: 'Car brands', href: '/cars' },
+      { title: 'Car brands', href: '/brands' },
       { title: 'Auto services', href: '/auto-services' },
     ],
   },
