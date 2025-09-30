@@ -91,10 +91,10 @@ export default function Navbar() {
         animate='visible'
       >
         <div className='max-w-7xl mx-auto px-4 md:px-6 lg:px-8'>
-          <div className='flex justify-between items-center h-16 md:h-20'>
+          <div className='flex justify-between items-center h-16 md:h-20 overflow-visible'>
             {/* Logo */}
-            <motion.div variants={itemVariants}>
-              <Link href='/' className='flex items-center gap-3 group'>
+            <motion.div variants={itemVariants} className='overflow-visible'>
+              <Link href='/' className='flex items-center gap-3 group overflow-visible'>
                 <div className='relative w-12 h-12 flex-shrink-0'>
                   <Image
                     src='/logos/logo-icon.svg'
@@ -103,11 +103,11 @@ export default function Navbar() {
                     className='object-contain group-hover:scale-110 transition-transform duration-300'
                   />
                 </div>
-                <div className='text-white flex items-center'>
-                  <TextRoll className='text-xl md:text-2xl font-light tracking-wide font-montserrat group-hover:text-primary transition-colors duration-300'>
-                    YAYA
+                <div className='text-white flex items-center py-3 overflow-visible'>
+                  <TextRoll className='font-coplette text-xl md:text-2xl font-light tracking-wide font-montserrat group-hover:text-primary transition-colors duration-300 leading-normal'>
+                    yaya
                   </TextRoll>
-                  <TextRoll className='text-xl md:text-2xl tracking-wide font-montserrat group-hover:text-primary transition-colors duration-300 font-semibold'>
+                  <TextRoll className='font-coplette text-xl md:text-2xl tracking-wide font-montserrat group-hover:text-primary transition-colors duration-300 font-semibold leading-normal'>
                     Go
                   </TextRoll>
                 </div>

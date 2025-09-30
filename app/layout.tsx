@@ -1,7 +1,20 @@
 import type { Metadata, Viewport } from 'next';
 import { Geist, Geist_Mono, Montserrat } from 'next/font/google';
+import localFont from 'next/font/local';
 import './globals.css';
 import keywords from '@/seo/keywords';
+
+const coplette = localFont({
+  src: [
+    {
+      path: '../public/fonts/coplette/Coplette.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+  ],
+  variable: '--font-coplette',
+  display: 'swap',
+});
 
 const montserrat = Montserrat({
   variable: '--font-montserrat',
@@ -72,7 +85,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} ${coplette.variable} antialiased`}
+      >
         {children}
       </body>
     </html>

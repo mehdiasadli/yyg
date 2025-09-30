@@ -12,9 +12,9 @@ const TextRoll: React.FC<{
     <motion.span
       initial='initial'
       whileHover='hovered'
-      className={cn('relative block overflow-hidden', className)}
+      className={cn('relative inline-block overflow-hidden', className)}
       style={{
-        lineHeight: 0.75,
+        lineHeight: 1.4,
       }}
     >
       <div>
