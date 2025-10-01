@@ -60,7 +60,7 @@ export default function HomeRentalCompany() {
           hoverScale={1.05}
           tapScale={0.95}
           asChild
-          className='cursor-pointer text-sm font-medium px-18 py-6 overflow-hidden [--liquid-button-color:var(--primary)] [--liquid-button-background-color:var(--accent)] text-primary hover:text-primary-foreground'
+          className='rounded-full cursor-pointer text-sm font-medium px-18 py-6 overflow-hidden [--liquid-button-color:var(--primary)] [--liquid-button-background-color:var(--accent)] text-primary hover:text-primary-foreground'
         >
           <motion.button>
             <Link href='/auth/register?as=earner'>List Your Cars</Link>

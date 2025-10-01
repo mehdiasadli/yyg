@@ -265,7 +265,7 @@ export default function HomeExploreCars() {
                 fillHeight='2px'
                 hoverScale={1.05}
                 tapScale={0.95}
-                className='cursor-pointer text-sm font-medium px-6 py-3 h-12 overflow-hidden [--liquid-button-color:var(--primary)] [--liquid-button-background-color:var(--accent)] text-primary hover:text-primary-foreground'
+                className='rounded-full cursor-pointer text-sm font-medium px-6 py-3 h-12 overflow-hidden [--liquid-button-color:var(--primary)] [--liquid-button-background-color:var(--accent)] text-primary hover:text-primary-foreground'
               >
                 <Link href='/cars' className='inline-flex items-center gap-2'>
                   <span>View All Vehicles</span>

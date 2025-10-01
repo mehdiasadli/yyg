@@ -399,7 +399,7 @@ export default function ListingPage() {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className='inline-block'>
                   <Button
                     variant='outline'
-                    className='gap-2 border-2 border-white/20 hover:border-white/40 hover:bg-white/10 text-white font-normal rounded-xl px-6 py-5 backdrop-blur-sm transition-all duration-200'
+                    className='gap-2 border-2 border-white/20 hover:border-white/40 hover:bg-white/10 text-black hover:text-white font-normal rounded-xl px-6 py-5 backdrop-blur-sm transition-all duration-200'
                   >
                     Contact Support
                   </Button>
@@ -409,7 +409,7 @@ export default function ListingPage() {
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className='inline-block'>
                   <Button
                     variant='outline'
-                    className='gap-2 border-2 border-white/20 hover:border-white/40 hover:bg-white/10 text-white font-normal rounded-xl px-6 py-5 backdrop-blur-sm transition-all duration-200'
+                    className='gap-2 border-2 border-white/20 hover:border-white/40 hover:bg-white/10 text-black hover:text-white font-normal rounded-xl px-6 py-5 backdrop-blur-sm transition-all duration-200'
                   >
                     View FAQ
                   </Button>

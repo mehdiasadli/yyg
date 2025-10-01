@@ -12,6 +12,7 @@ const items = [
     details: 'Direct connections mean better prices for renters and maximum profits for owners',
     icon: DollarSign,
     gradient: 'from-emerald-500 to-green-600',
+    color: 'emerald',
     iconBg: 'from-emerald-500/10 to-green-600/10',
   },
   {
@@ -21,6 +22,7 @@ const items = [
     details: 'Instant help whenever you need it, wherever you are',
     icon: Clock,
     gradient: 'from-blue-500 to-cyan-600',
+    color: 'blue',
     iconBg: 'from-blue-500/10 to-cyan-600/10',
   },
   {
@@ -29,6 +31,7 @@ const items = [
     details: 'Everything automotive in one place - seamless and convenient',
     icon: Globe,
     gradient: 'from-purple-500 to-violet-600',
+    color: 'purple',
     iconBg: 'from-purple-500/10 to-violet-600/10',
   },
   {
@@ -37,6 +40,7 @@ const items = [
     details: 'Trust and safety guaranteed through comprehensive verification',
     icon: Shield,
     gradient: 'from-orange-500 to-red-600',
+    color: 'orange',
     iconBg: 'from-orange-500/10 to-red-600/10',
   },
   {
@@ -45,6 +49,7 @@ const items = [
     details: 'No waiting - get what you need when you need it',
     icon: Zap,
     gradient: 'from-amber-500 to-orange-600',
+    color: 'amber',
     iconBg: 'from-amber-500/10 to-orange-600/10',
   },
   {
@@ -53,6 +58,7 @@ const items = [
     details: 'Real-time pricing updates and honest, upfront costs',
     icon: CheckCircle,
     gradient: 'from-teal-500 to-emerald-600',
+    color: 'teal',
     iconBg: 'from-teal-500/10 to-emerald-600/10',
   },
 ];
@@ -317,10 +323,7 @@ function FeatureCard({ item, index }: { item: (typeof items)[0]; index: number }
           <div
             className={`inline-flex p-4 rounded-2xl bg-gradient-to-br ${item.iconBg} border border-gray-200/50 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-sm`}
           >
-            <item.icon
-              className={`w-7 h-7 bg-gradient-to-br ${item.gradient} bg-clip-text text-transparent`}
-              strokeWidth={1.5}
-            />
+            <item.icon className={`w-7 h-7 text-${item.color}-600`} strokeWidth={1.5} />
           </div>
 
           {/* Animated glow effect */}
