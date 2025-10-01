@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { locations } from '@/data/locations';
 
 const headerVariants = {
   hidden: { opacity: 0, y: -20 },
@@ -31,108 +32,6 @@ const cardVariants = {
     },
   },
 };
-
-const locations = [
-  {
-    id: 'dubai-marina',
-    name: 'Dubai Marina',
-    city: 'Dubai',
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 450,
-    serviceCount: 85,
-    rating: 4.8,
-    trending: true,
-    featured: true,
-  },
-  {
-    id: 'downtown-dubai',
-    name: 'Downtown Dubai',
-    city: 'Dubai',
-    image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 380,
-    serviceCount: 72,
-    rating: 4.9,
-    trending: true,
-    featured: true,
-  },
-  {
-    id: 'business-bay',
-    name: 'Business Bay',
-    city: 'Dubai',
-    image: 'https://images.unsplash.com/photo-1582672060674-bc2bd808a8b5?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 320,
-    serviceCount: 68,
-    rating: 4.7,
-    trending: false,
-    featured: true,
-  },
-  {
-    id: 'jumeirah',
-    name: 'Jumeirah',
-    city: 'Dubai',
-    image: 'https://images.unsplash.com/photo-1613491485514-0d79579c2f41?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 290,
-    serviceCount: 55,
-    rating: 4.8,
-    trending: false,
-    featured: false,
-  },
-  {
-    id: 'jbr',
-    name: 'JBR (Jumeirah Beach Residence)',
-    city: 'Dubai',
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 265,
-    serviceCount: 48,
-    rating: 4.7,
-    trending: false,
-    featured: false,
-  },
-  {
-    id: 'dubai-mall',
-    name: 'Dubai Mall Area',
-    city: 'Dubai',
-    image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 310,
-    serviceCount: 62,
-    rating: 4.8,
-    trending: true,
-    featured: false,
-  },
-  {
-    id: 'abu-dhabi',
-    name: 'Abu Dhabi',
-    city: 'Abu Dhabi',
-    image: 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 410,
-    serviceCount: 78,
-    rating: 4.8,
-    trending: true,
-    featured: true,
-  },
-  {
-    id: 'sharjah',
-    name: 'Sharjah',
-    city: 'Sharjah',
-    image: 'https://images.unsplash.com/photo-1582672060674-bc2bd808a8b5?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 180,
-    serviceCount: 35,
-    rating: 4.6,
-    trending: false,
-    featured: false,
-  },
-  {
-    id: 'ajman',
-    name: 'Ajman',
-    city: 'Ajman',
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 145,
-    serviceCount: 28,
-    rating: 4.5,
-    trending: false,
-    featured: false,
-  },
-];
 
 export default function LocationsPage() {
   const [searchQuery, setSearchQuery] = useState('');

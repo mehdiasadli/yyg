@@ -1,5 +1,6 @@
 'use client';
 
+import { locations } from '@/data/locations';
 import { motion } from 'framer-motion';
 import { MapPin, TrendingUp, Users, Star } from 'lucide-react';
 import Image from 'next/image';
@@ -26,63 +27,6 @@ const itemVariants = {
     },
   },
 };
-
-const locations = [
-  {
-    id: 'dubai-marina',
-    name: 'Dubai Marina',
-    city: 'Dubai',
-    image: 'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 450,
-    rating: 4.8,
-    trending: true,
-  },
-  {
-    id: 'downtown-dubai',
-    name: 'Downtown Dubai',
-    city: 'Dubai',
-    image: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 380,
-    rating: 4.9,
-    trending: true,
-  },
-  {
-    id: 'business-bay',
-    name: 'Business Bay',
-    city: 'Dubai',
-    image: 'https://images.unsplash.com/photo-1582672060674-bc2bd808a8b5?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 320,
-    rating: 4.7,
-    trending: false,
-  },
-  {
-    id: 'jumeirah',
-    name: 'Jumeirah',
-    city: 'Dubai',
-    image: 'https://images.unsplash.com/photo-1613491485514-0d79579c2f41?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 290,
-    rating: 4.8,
-    trending: false,
-  },
-  {
-    id: 'abu-dhabi',
-    name: 'Abu Dhabi',
-    city: 'Abu Dhabi',
-    image: 'https://images.unsplash.com/photo-1512632578888-169bbbc64f33?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 410,
-    rating: 4.8,
-    trending: true,
-  },
-  {
-    id: 'sharjah',
-    name: 'Sharjah',
-    city: 'Sharjah',
-    image: 'https://images.unsplash.com/photo-1582672060674-bc2bd808a8b5?q=80&w=1000&auto=format&fit=crop',
-    vehicleCount: 180,
-    rating: 4.6,
-    trending: false,
-  },
-];
 
 export default function HomeLocations() {
   return (
@@ -139,7 +83,7 @@ export default function HomeLocations() {
           whileInView='visible'
           viewport={{ once: true, margin: '-100px' }}
         >
-          {locations.map((location, index) => (
+          {locations.slice(0, 6).map((location) => (
             <motion.div key={location.id} variants={itemVariants}>
               <Link href={`/locations/${location.city.toLowerCase()}/${location.id}`} className='group block h-full'>
                 <div className='relative bg-white rounded-2xl sm:rounded-3xl overflow-hidden border border-slate-200 hover:border-slate-300 transition-all duration-300 hover:shadow-xl hover:shadow-slate-200/50 h-full'>
