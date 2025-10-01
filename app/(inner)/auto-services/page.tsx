@@ -14,6 +14,22 @@ import { DualRangeSlider } from '@/components/ui/dual-range-slider';
 // Auto services data - in a real app, this would come from a database
 const autoServices = [
   {
+    id: 'intensive-car-care',
+    slug: 'intensive-car-care',
+    name: 'Intensive Car Care',
+    location: 'Dubai Marina, Dubai',
+    rating: 5.0,
+    reviews_count: 120,
+    specialties: ['ceramic coating', 'paint correction', 'interior detailing'],
+    opening_hours: '09:00-18:00',
+    price: { from: 180, to: 800, currency: 'AED' },
+    phone: '+971-50-123-4567',
+    whatsapp: '+971-50-123-4567',
+    badges: ['premium partner', 'detailing expert'],
+    category: 'detailing',
+    image: '/images/icc.png',
+  },
+  {
     id: 'carcare-pro-detailing',
     slug: 'carcare-pro-detailing',
     name: 'CarCare Pro Detailing',
