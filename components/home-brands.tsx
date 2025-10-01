@@ -169,7 +169,7 @@ export default function HomeBrands() {
               hoverScale={1.08}
               tapScale={0.92}
               asChild
-              className='cursor-pointer text-sm font-semibold px-8 py-4 h-14 overflow-hidden [--liquid-button-color:var(--primary)] [--liquid-button-background-color:var(--accent)] text-primary hover:text-primary-foreground shadow-lg hover:shadow-xl transition-shadow duration-300'
+              className='rounded-full cursor-pointer text-sm font-semibold px-8 py-4 h-14 overflow-hidden [--liquid-button-color:var(--primary)] [--liquid-button-background-color:var(--accent)] text-primary hover:text-primary-foreground shadow-lg hover:shadow-xl transition-shadow duration-300'
             >
               <motion.button whileHover={{ scale: 1.08, y: -2 }} whileTap={{ scale: 0.92 }} className='relative'>
                 <Link href='/brands' className='inline-flex items-center gap-3'>
